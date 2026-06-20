@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Byild Media — We design websites that convert. Premium web design, landing pages, maintenance & redesign for businesses that mean business.">
+  <meta name="description" content="Byild Media — We design websites that convert. Premium web design, landing pages, maintenance and redesign for businesses that mean business.">
   <title>Byild Media — Websites That Work</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ─── TOKENS ─── */
+    /* ─── TOKENS: DARK (default) ─── */
     :root {
       --black:       #080808;
       --surface:     #111111;
       --surface-2:   #181818;
-      --border:      rgba(201,185,154,0.15);
+      --border:      rgba(201,185,154,0.14);
       --gold:        #C9B99A;
       --gold-bright: #E2CFA8;
-      --gold-dim:    rgba(201,185,154,0.35);
+      --gold-dim:    rgba(201,185,154,0.3);
       --white:       #FFFFFF;
-      --text:        rgba(255,255,255,0.9);
-      --text-muted:  rgba(255,255,255,0.5);
-      --text-dim:    rgba(255,255,255,0.3);
+      --text:        rgba(255,255,255,0.88);
+      --text-muted:  rgba(255,255,255,0.48);
+      --text-dim:    rgba(255,255,255,0.28);
 
-      --font-head: 'Syne', system-ui, sans-serif;
-      --font-body: 'Inter', system-ui, sans-serif;
+      --font-head: 'Cormorant Garant', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
 
       --ease: cubic-bezier(0.22,1,0.36,1);
       --t:    200ms var(--ease);
@@ -35,16 +35,40 @@
       --r-md: 12px;
       --r-lg: 20px;
 
-      --shadow-gold: 0 0 40px rgba(201,185,154,0.12);
+      --shadow-gold: 0 0 40px rgba(201,185,154,0.1);
+    }
+
+    /* ─── TOKENS: LIGHT ─── */
+    [data-theme="light"] {
+      --black:       #F7F4EE;
+      --surface:     #EDE9E1;
+      --surface-2:   #E5E0D6;
+      --border:      rgba(100,80,50,0.18);
+      --gold:        #7A6245;
+      --gold-bright: #9A7C56;
+      --gold-dim:    rgba(100,80,50,0.25);
+      --white:       #1C1208;
+      --text:        rgba(28,18,8,0.88);
+      --text-muted:  rgba(28,18,8,0.55);
+      --text-dim:    rgba(28,18,8,0.32);
+      --shadow-gold: 0 0 40px rgba(100,80,50,0.12);
     }
 
     /* ─── RESET ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font-body); background: var(--black); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
     img  { display: block; max-width: 100%; }
-    a    { text-decoration: none; color: inherit; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    a    { text-decoration: none; color: inherit; cursor: none; }
+    button { cursor: none; border: none; background: none; font-family: inherit; }
     ul   { list-style: none; }
 
     .skip-link {
@@ -57,29 +81,74 @@
     .skip-link:focus { top: 0; }
 
     /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--black); }
     ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
 
     /* ─── SELECTION ─── */
     ::selection { background: var(--gold); color: var(--black); }
 
+    /* ─── CUSTOM CURSOR ─── */
+    .cursor-orb {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(201,185,154,0.08);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(201,185,154,0.25);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+      top: 0; left: 0;
+    }
+    .cursor-dot {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      transform: translate(-50%, -50%);
+      top: 0; left: 0;
+      transition: opacity 0.3s ease;
+    }
+    .cursor-orb.expanded {
+      width: 64px; height: 64px;
+      background: rgba(201,185,154,0.12);
+      border-color: rgba(201,185,154,0.4);
+    }
+    [data-theme="light"] .cursor-orb {
+      background: rgba(100,80,50,0.08);
+      border-color: rgba(100,80,50,0.25);
+    }
+    [data-theme="light"] .cursor-orb.expanded {
+      background: rgba(100,80,50,0.12);
+      border-color: rgba(100,80,50,0.4);
+    }
+    [data-theme="light"] .cursor-dot { background: var(--gold); }
+    @media (hover: none) {
+      .cursor-orb, .cursor-dot { display: none; }
+      body, a, button { cursor: auto; }
+    }
+
     /* ─── LAYOUT ─── */
     section { padding: 7rem 0; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
     .section-label {
       display: inline-block;
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1rem;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem; font-family: var(--font-body);
     }
     .section-title {
       font-family: var(--font-head);
-      font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700;
-      color: var(--white); line-height: 1.12; letter-spacing: -0.02em;
+      font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 600;
+      color: var(--white); line-height: 1.08; letter-spacing: -0.01em;
     }
     .section-sub {
-      font-size: 1.05rem; color: var(--text-muted); line-height: 1.8;
-      max-width: 560px; margin-top: 1rem;
+      font-size: 1rem; color: var(--text-muted); line-height: 1.85;
+      max-width: 560px; margin-top: 1rem; font-weight: 300;
     }
     .text-center { text-align: center; }
     .text-center .section-sub { margin: 1rem auto 0; }
@@ -88,54 +157,77 @@
     /* ─── BUTTONS ─── */
     .btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.85rem 2rem; min-height: 48px;
-      font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      border-radius: var(--r-sm); cursor: pointer;
+      padding: 0.9rem 2rem; min-height: 50px;
+      font-family: var(--font-body); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: var(--r-sm); cursor: none;
       touch-action: manipulation;
       transition: transform var(--t), box-shadow var(--t), background var(--t), border-color var(--t);
     }
-    .btn:active { transform: scale(0.97); }
+    .btn:active { transform: scale(0.97) !important; }
     .btn:focus  { outline: 2px solid var(--gold); outline-offset: 3px; }
 
     .btn-gold {
-      background: var(--gold); color: var(--black);
+      background: var(--gold); color: #080808;
     }
-    .btn-gold:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201,185,154,0.3); }
+    .btn-gold:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(201,185,154,0.25); }
 
     .btn-outline {
-      border: 1.5px solid var(--border); color: var(--text);
+      border: 1px solid var(--border); color: var(--text);
       background: transparent;
     }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ─── THEME TOGGLE ─── */
+    .theme-toggle {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border); border-radius: var(--r-sm);
+      color: var(--text-muted); cursor: none;
+      transition: border-color var(--t), color var(--t), background var(--t);
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { border-color: var(--gold); color: var(--gold); }
+    .theme-toggle:focus { outline: 2px solid var(--gold); outline-offset: 3px; }
+    .theme-toggle svg { width: 16px; height: 16px; pointer-events: none; }
+    .icon-moon { display: block; }
+    .icon-sun  { display: none; }
+    [data-theme="light"] .icon-moon { display: none; }
+    [data-theme="light"] .icon-sun  { display: block; }
 
     /* ─── NAV ─── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 1.4rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      transition: background var(--ts), backdrop-filter var(--ts), padding var(--ts);
+      transition: background var(--ts), backdrop-filter var(--ts), padding var(--ts), border-color var(--ts);
     }
     .nav.scrolled {
-      background: rgba(8,8,8,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       padding: 1rem 2rem;
       border-bottom: 1px solid var(--border);
+    }
+    [data-theme="light"] .nav.scrolled {
+      background: rgba(247,244,238,0.88);
     }
 
     .nav-logo {
       display: flex; align-items: center; gap: 0.75rem;
     }
-    .nav-logo svg { width: 36px; height: 36px; }
+    .nav-logo svg { height: 44px; width: auto; }
 
+    .nav-right {
+      display: flex; align-items: center; gap: 1rem;
+    }
     .nav-links {
       display: flex; align-items: center; gap: 2.5rem;
     }
     .nav-links a {
-      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--text-muted); transition: color var(--t);
-      position: relative; padding-bottom: 3px;
+      position: relative; padding-bottom: 3px; cursor: none;
     }
     .nav-links a::after {
       content: ''; position: absolute; bottom: 0; left: 0;
@@ -143,15 +235,15 @@
       transition: width var(--t);
     }
     .nav-links a:hover { color: var(--white); }
+    [data-theme="light"] .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
     .nav-links a:focus { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 2px; }
 
-    /* Hamburger */
     .nav-ham {
       display: none; flex-direction: column; gap: 5px;
       min-width: 44px; min-height: 44px;
       align-items: center; justify-content: center;
-      border-radius: var(--r-sm); touch-action: manipulation;
+      border-radius: var(--r-sm); touch-action: manipulation; cursor: none;
     }
     .nav-ham span {
       display: block; width: 22px; height: 1.5px;
@@ -169,8 +261,8 @@
     }
     .nav-mobile.open { display: flex; }
     .nav-mobile a {
-      font-family: var(--font-head); font-size: 2rem; font-weight: 700;
-      color: var(--text-muted); transition: color var(--t);
+      font-family: var(--font-head); font-size: 2.5rem; font-weight: 600;
+      color: var(--text-muted); transition: color var(--t); cursor: none;
     }
     .nav-mobile a:hover { color: var(--gold); }
 
@@ -181,7 +273,6 @@
       overflow: hidden; text-align: center;
     }
 
-    /* Video background */
     .hero-video {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; z-index: 0;
@@ -190,41 +281,44 @@
       position: absolute; inset: 0; z-index: 1;
       background: linear-gradient(
         to bottom,
-        rgba(8,8,8,0.65) 0%,
-        rgba(8,8,8,0.45) 50%,
-        rgba(8,8,8,0.85) 100%
+        rgba(8,8,8,0.72) 0%,
+        rgba(8,8,8,0.5) 50%,
+        rgba(8,8,8,0.88) 100%
       );
     }
-    /* Animated fallback if video doesn't load */
+    [data-theme="light"] .hero-video-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(247,244,238,0.75) 0%,
+        rgba(247,244,238,0.55) 50%,
+        rgba(247,244,238,0.92) 100%
+      );
+    }
+
     .hero-bg-fallback {
       position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,185,154,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201,185,154,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,185,154,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201,185,154,0.04) 0%, transparent 50%),
         var(--black);
     }
-    /* Floating orbs */
     .hero-orb {
       position: absolute; border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,185,154,0.12), transparent 70%);
-      animation: orbFloat 12s ease-in-out infinite;
+      background: radial-gradient(circle, rgba(201,185,154,0.1), transparent 70%);
+      animation: orbFloat 14s ease-in-out infinite;
       z-index: 1; pointer-events: none;
     }
-    .hero-orb-1 { width: 600px; height: 600px; top: -100px; right: -100px; animation-delay: 0s; }
-    .hero-orb-2 { width: 400px; height: 400px; bottom: -50px; left: -80px; animation-delay: -6s; }
+    .hero-orb-1 { width: 700px; height: 700px; top: -150px; right: -150px; animation-delay: 0s; }
+    .hero-orb-2 { width: 500px; height: 500px; bottom: -80px; left: -100px; animation-delay: -7s; }
     @keyframes orbFloat {
       0%,100% { transform: translate(0,0) scale(1); }
-      33%      { transform: translate(30px,-30px) scale(1.05); }
-      66%      { transform: translate(-20px,20px) scale(0.97); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero-orb { animation: none; }
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      33%      { transform: translate(28px,-28px) scale(1.04); }
+      66%      { transform: translate(-18px,18px) scale(0.97); }
     }
 
-    /* Grid lines overlay */
     .hero-grid {
-      position: absolute; inset: 0; z-index: 1; opacity: 0.04; pointer-events: none;
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      opacity: 0.03;
       background-image:
         linear-gradient(to right, var(--gold) 1px, transparent 1px),
         linear-gradient(to bottom, var(--gold) 1px, transparent 1px);
@@ -232,78 +326,73 @@
     }
 
     .hero-content {
-      position: relative; z-index: 2; padding: 2rem; max-width: 960px;
+      position: relative; z-index: 2; padding: 2rem; max-width: 1000px;
     }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 0.75rem;
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 2rem;
-      border: 1px solid var(--border); border-radius: 100px;
-      padding: 0.45rem 1.2rem;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.2s forwards;
-    }
-    .hero-eyebrow::before {
-      content: ''; display: block; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
 
     .hero-h1 {
       font-family: var(--font-head);
-      font-size: clamp(2.8rem, 7.5vw, 6.5rem); font-weight: 800;
-      line-height: 1.0; letter-spacing: -0.03em;
-      color: var(--white); margin-bottom: 1.75rem;
-      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.4s forwards;
+      font-size: clamp(3.2rem, 9vw, 8rem); font-weight: 600;
+      line-height: 0.96; letter-spacing: -0.02em;
+      color: var(--white); margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 1s var(--ease) 0.2s forwards;
     }
     .hero-h1 .line-gold {
-      background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--gold));
+      background: linear-gradient(100deg, var(--gold), var(--gold-bright), var(--gold));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      background-size: 200% auto; animation: shimmer 3s linear infinite;
+      background-size: 200% auto; animation: shimmer 4s linear infinite;
+      font-style: italic;
     }
     @keyframes shimmer { to { background-position: 200% center; } }
 
     .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300;
-      color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; line-height: 1.75;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.6s forwards;
+      font-size: clamp(1rem, 1.8vw, 1.15rem); font-weight: 300;
+      color: var(--text-muted); max-width: 540px; margin: 0 auto 3rem; line-height: 1.85;
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.45s forwards;
     }
     .hero-actions {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.8s var(--ease) 0.8s forwards;
+      opacity: 0; animation: fadeUp 0.9s var(--ease) 0.65s forwards;
     }
     .hero-scroll {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      color: var(--text-dim); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-family: var(--font-body);
+      opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
     }
     .hero-scroll-line {
-      width: 1px; height: 40px;
+      width: 1px; height: 48px;
       background: linear-gradient(to bottom, var(--gold-dim), transparent);
-      animation: scrollAnim 2.5s ease-in-out infinite;
+      animation: scrollAnim 2.8s ease-in-out infinite;
     }
-    @keyframes scrollAnim { 0%,100% { opacity: 0.6; transform: scaleY(1); transform-origin: top; } 50% { opacity: 0.15; transform: scaleY(0.3); transform-origin: top; } }
+    @keyframes scrollAnim { 0%,100% { opacity: 0.6; transform: scaleY(1) translateY(0); } 50% { opacity: 0.1; transform: scaleY(0.2) translateY(0); } }
 
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
     @keyframes fadeIn { to { opacity: 1; } }
-    .hero-eyebrow, .hero-h1, .hero-sub, .hero-actions { transform: translateY(24px); }
 
-    /* ─── MARQUEE (ticker) ─── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-orb { animation: none; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ─── MARQUEE ─── */
     .marquee-strip {
       background: var(--gold); overflow: hidden;
-      padding: 0.85rem 0; white-space: nowrap;
+      padding: 0.9rem 0; white-space: nowrap;
     }
+    [data-theme="light"] .marquee-strip { background: var(--gold); }
     .marquee-track {
       display: inline-flex; gap: 3rem;
-      animation: marquee 20s linear infinite;
+      animation: marquee 22s linear infinite;
     }
     @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     .marquee-item {
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--black); display: inline-flex; align-items: center; gap: 1.5rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: #080808; display: inline-flex; align-items: center; gap: 1.5rem;
+      font-family: var(--font-body);
     }
-    .marquee-item::after { content: '✦'; opacity: 0.5; }
+    .marquee-item::after { content: '✦'; opacity: 0.4; }
 
     /* ─── SERVICES ─── */
     #services { background: var(--surface); }
@@ -324,35 +413,32 @@
     .service-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); box-shadow: var(--shadow-gold); }
     .service-card:hover::before { opacity: 1; }
     .service-num {
-      font-family: var(--font-head); font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1.5rem; display: block;
+      font-family: var(--font-body); font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.22em; color: var(--gold); margin-bottom: 1.5rem; display: block;
     }
     .service-icon {
-      width: 52px; height: 52px; background: rgba(201,185,154,0.08);
+      width: 52px; height: 52px; background: rgba(201,185,154,0.07);
       border: 1px solid var(--border); border-radius: var(--r-sm);
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 1.5rem;
     }
-    .service-icon svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
+    .service-icon svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
     .service-title {
-      font-family: var(--font-head); font-size: 1.3rem; font-weight: 700;
-      color: var(--white); margin-bottom: 0.75rem; letter-spacing: -0.01em;
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 600;
+      color: var(--white); margin-bottom: 0.75rem;
     }
-    .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; }
+    .service-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; font-weight: 300; }
     .service-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
     .service-tag {
-      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
       padding: 0.3rem 0.75rem; border: 1px solid var(--border);
-      border-radius: 100px; color: var(--text-dim);
+      border-radius: 100px; color: var(--text-dim); font-family: var(--font-body);
     }
 
-    /* ─── WHY CHOOSE US ─── */
+    /* ─── WHY ─── */
     #why { background: var(--black); }
     .why-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem;
-    }
-    .why-visual {
-      position: relative;
     }
     .why-card-main {
       background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg);
@@ -360,13 +446,14 @@
     }
     .why-card-main::after {
       content: ''; position: absolute; inset: 0; border-radius: inherit;
-      background: radial-gradient(ellipse at 0% 0%, rgba(201,185,154,0.08), transparent 60%);
+      background: radial-gradient(ellipse at 0% 0%, rgba(201,185,154,0.06), transparent 60%);
+      pointer-events: none;
     }
     .why-big-num {
-      font-family: var(--font-head); font-size: 5rem; font-weight: 800;
-      color: var(--gold); line-height: 1; margin-bottom: 0.5rem; letter-spacing: -0.04em;
+      font-family: var(--font-head); font-size: 5.5rem; font-weight: 700;
+      color: var(--gold); line-height: 1; margin-bottom: 0.4rem; letter-spacing: -0.04em;
     }
-    .why-big-label { font-size: 0.9rem; color: var(--text-muted); }
+    .why-big-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 300; }
     .why-stats {
       display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;
     }
@@ -374,10 +461,10 @@
       background: var(--surface-2); border: 1px solid var(--border);
       border-radius: var(--r-md); padding: 1.25rem;
     }
-    .why-stat-num { font-family: var(--font-head); font-size: 1.8rem; font-weight: 800; color: var(--white); }
-    .why-stat-lbl { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.25rem; }
+    .why-stat-num { font-family: var(--font-head); font-size: 2rem; font-weight: 700; color: var(--white); }
+    .why-stat-lbl { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.2rem; font-weight: 300; }
 
-    .why-points { display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-points { display: flex; flex-direction: column; gap: 1.25rem; }
     .why-point {
       display: flex; gap: 1.25rem; align-items: flex-start;
       padding: 1.5rem; background: var(--surface);
@@ -387,12 +474,12 @@
     .why-point:hover { border-color: var(--gold-dim); transform: translateX(4px); }
     .why-point-icon {
       width: 44px; height: 44px; flex-shrink: 0;
-      background: rgba(201,185,154,0.08); border: 1px solid var(--border);
+      background: rgba(201,185,154,0.07); border: 1px solid var(--border);
       border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center;
     }
     .why-point-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
-    .why-point-title { font-weight: 700; font-size: 0.95rem; color: var(--white); margin-bottom: 0.35rem; }
-    .why-point-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+    .why-point-title { font-weight: 600; font-size: 0.95rem; color: var(--white); margin-bottom: 0.3rem; }
+    .why-point-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
 
     /* ─── PORTFOLIO ─── */
     #portfolio { background: var(--surface); }
@@ -401,30 +488,22 @@
     }
     .portfolio-card {
       position: relative; border-radius: var(--r-md); overflow: hidden;
-      aspect-ratio: 4/3; background: var(--surface-2); cursor: pointer;
-      group: '';
+      aspect-ratio: 4/3; background: var(--surface-2); cursor: none;
     }
     .portfolio-img {
       width: 100%; height: 100%; object-fit: cover;
-      transition: transform 600ms var(--ease);
+      transition: transform 700ms var(--ease);
     }
-    .portfolio-card:hover .portfolio-img { transform: scale(1.06); }
+    .portfolio-card:hover .portfolio-img { transform: scale(1.07); }
     .portfolio-overlay {
       position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.2) 60%, transparent 100%);
+      background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.2) 60%, transparent 100%);
       opacity: 0; transition: opacity var(--ts);
       display: flex; flex-direction: column; justify-content: flex-end; padding: 1.75rem;
     }
     .portfolio-card:hover .portfolio-overlay { opacity: 1; }
-    .portfolio-cat { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-    .portfolio-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--white); }
-    .portfolio-placeholder {
-      width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(135deg, var(--surface-2), var(--surface));
-    }
-    .portfolio-placeholder-inner { text-align: center; }
-    .portfolio-placeholder-icon { width: 48px; height: 48px; stroke: var(--gold-dim); fill: none; stroke-width: 1; margin: 0 auto 0.75rem; }
-    .portfolio-placeholder-text { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
+    .portfolio-cat { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; font-family: var(--font-body); }
+    .portfolio-name { font-family: var(--font-head); font-size: 1.3rem; font-weight: 600; color: #ffffff; }
 
     /* ─── PROCESS ─── */
     #process { background: var(--black); }
@@ -445,16 +524,16 @@
       transition: border-color var(--ts), background var(--ts);
     }
     .process-step:hover .process-num-wrap {
-      border-color: var(--gold); background: rgba(201,185,154,0.08);
+      border-color: var(--gold); background: rgba(201,185,154,0.07);
     }
     .process-num {
-      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--gold);
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; color: var(--gold);
     }
     .process-title {
-      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 600;
       color: var(--white); margin-bottom: 0.6rem;
     }
-    .process-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.65; }
+    .process-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
 
     /* ─── ABOUT ─── */
     #about { background: var(--surface); }
@@ -462,31 +541,26 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
     }
     .about-visual-wrap { position: relative; }
-    .about-img-main {
-      width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--r-lg);
-      border: 1px solid var(--border);
-    }
     .about-img-placeholder {
       width: 100%; aspect-ratio: 1/1; border-radius: var(--r-lg);
       border: 1px solid var(--border); background: var(--surface-2);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;
     }
-    .about-logo-big svg { width: 100px; height: 100px; }
+    .about-logo-big svg { width: 100px; height: auto; }
     .about-floating-card {
       position: absolute; bottom: -1.5rem; right: -1.5rem;
-      background: var(--gold); color: var(--black);
+      background: var(--gold); color: #080808;
       border-radius: var(--r-md); padding: 1.5rem 2rem; text-align: center;
-      box-shadow: 0 20px 40px rgba(201,185,154,0.25);
+      box-shadow: 0 20px 40px rgba(201,185,154,0.2);
     }
-    .about-floating-num { font-family: var(--font-head); font-size: 2.5rem; font-weight: 800; line-height: 1; }
-    .about-floating-lbl { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.3rem; }
-    .about-text p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1rem; }
-    .about-certs {
-      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem;
-    }
+    .about-floating-num { font-family: var(--font-head); font-size: 2.5rem; font-weight: 700; line-height: 1; }
+    .about-floating-lbl { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.3rem; font-family: var(--font-body); }
+    .about-text p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1rem; font-weight: 300; }
+    .about-certs { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
     .about-cert {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
       padding: 0.45rem 1rem; border: 1px solid var(--border); border-radius: 100px; color: var(--gold);
+      font-family: var(--font-body);
     }
 
     /* ─── TESTIMONIALS ─── */
@@ -500,21 +574,21 @@
       transition: border-color var(--ts), transform var(--ts);
     }
     .testi-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); }
-    .testi-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 0.1em; }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; }
     .testi-quote {
-      font-family: var(--font-head); font-style: italic; font-size: 1rem; font-weight: 400;
-      color: var(--text); line-height: 1.72; flex: 1;
+      font-family: var(--font-head); font-style: italic; font-size: 1.05rem; font-weight: 400;
+      color: var(--text); line-height: 1.75; flex: 1;
     }
-    .testi-quote::before { content: '"'; color: var(--gold); font-size: 1.4rem; line-height: 0; vertical-align: -0.3rem; margin-right: 0.2rem; }
+    .testi-quote::before { content: '\201C'; color: var(--gold); font-size: 1.8rem; line-height: 0; vertical-align: -0.4rem; margin-right: 0.1rem; }
     .testi-author { display: flex; align-items: center; gap: 1rem; }
     .testi-avatar {
       width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
       background: var(--surface-2); display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--gold);
+      font-family: var(--font-head); font-size: 1.2rem; font-weight: 600; color: var(--gold);
       flex-shrink: 0;
     }
-    .testi-name { font-weight: 700; font-size: 0.88rem; color: var(--white); }
-    .testi-role { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.15rem; }
+    .testi-name { font-weight: 600; font-size: 0.88rem; color: var(--white); }
+    .testi-role { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem; font-weight: 300; }
 
     /* ─── PRICING ─── */
     #pricing { background: var(--surface); }
@@ -534,43 +608,38 @@
     .pricing-card.featured:hover { transform: scale(1.03) translateY(-6px); }
     .pricing-badge {
       position: absolute; top: 1.5rem; right: 1.5rem;
-      background: var(--gold); color: var(--black);
-      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.3rem 0.75rem; border-radius: 100px;
+      background: var(--gold); color: #080808;
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.3rem 0.75rem; border-radius: 100px; font-family: var(--font-body);
     }
     .pricing-plan {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.75rem;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem; font-family: var(--font-body);
     }
     .pricing-name {
-      font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
-      color: var(--white); margin-bottom: 1.5rem; letter-spacing: -0.01em;
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 600;
+      color: var(--white); margin-bottom: 1.5rem;
     }
-    .pricing-amount {
-      display: flex; align-items: flex-end; gap: 0.25rem; margin-bottom: 0.25rem;
-    }
-    .pricing-currency { font-size: 1.2rem; color: var(--gold); margin-bottom: 0.3rem; }
+    .pricing-amount { display: flex; align-items: flex-end; gap: 0.25rem; margin-bottom: 0.25rem; }
+    .pricing-currency { font-size: 1.2rem; color: var(--gold); margin-bottom: 0.35rem; font-family: var(--font-head); }
     .pricing-num {
-      font-family: var(--font-head); font-size: 3rem; font-weight: 800;
-      color: var(--white); line-height: 1; letter-spacing: -0.04em;
+      font-family: var(--font-head); font-size: 3.2rem; font-weight: 700;
+      color: var(--white); line-height: 1; letter-spacing: -0.03em;
     }
-    .pricing-period { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.25rem; }
-    .pricing-note { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 2rem; }
+    .pricing-period { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.25rem; font-weight: 300; }
+    .pricing-note { font-size: 0.77rem; color: var(--text-dim); margin-bottom: 2rem; font-weight: 300; }
     .pricing-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 2rem; }
     .pricing-features { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.5rem; }
     .pricing-feature {
       display: flex; align-items: flex-start; gap: 0.75rem;
-      font-size: 0.85rem; color: var(--text-muted);
+      font-size: 0.84rem; color: var(--text-muted); font-weight: 300;
     }
-    .pricing-feature svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 2.5; flex-shrink: 0; margin-top: 3px; }
+    .pricing-feature svg { width: 15px; height: 15px; stroke: var(--gold); fill: none; stroke-width: 2.5; flex-shrink: 0; margin-top: 3px; }
     .pricing-feature.dim { color: var(--text-dim); }
     .pricing-feature.dim svg { stroke: var(--text-dim); }
     .pricing-cta { width: 100%; justify-content: center; }
-
-    /* Custom pricing */
-    .pricing-custom-content { text-align: center; padding: 1rem 0; }
     .pricing-custom-icon {
-      width: 64px; height: 64px; background: rgba(201,185,154,0.08); border: 1px solid var(--border);
+      width: 64px; height: 64px; background: rgba(201,185,154,0.07); border: 1px solid var(--border);
       border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;
     }
     .pricing-custom-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
@@ -578,32 +647,26 @@
     /* ─── FAQ ─── */
     #faq { background: var(--black); }
     .faq-list { margin-top: 4rem; max-width: 760px; margin-left: auto; margin-right: auto; }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-    }
+    .faq-item { border-bottom: 1px solid var(--border); }
     .faq-btn {
       width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 1.6rem 0; text-align: left; cursor: pointer;
-      gap: 1rem; touch-action: manipulation;
-      transition: color var(--t);
+      padding: 1.6rem 0; text-align: left; cursor: none;
+      gap: 1rem; touch-action: manipulation; transition: color var(--t);
     }
     .faq-btn:hover .faq-q { color: var(--gold); }
     .faq-btn:focus { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 2px; }
-    .faq-q { font-size: 0.95rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+    .faq-q { font-size: 0.95rem; font-weight: 500; color: var(--white); line-height: 1.4; }
     .faq-icon {
-      width: 24px; height: 24px; flex-shrink: 0; border: 1px solid var(--border);
+      width: 26px; height: 26px; flex-shrink: 0; border: 1px solid var(--border);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
       transition: border-color var(--t), transform var(--t), background var(--t);
     }
     .faq-icon svg { width: 10px; height: 10px; stroke: var(--gold); fill: none; stroke-width: 2.5; transition: transform var(--t); }
     .faq-item.open .faq-icon { border-color: var(--gold); background: rgba(201,185,154,0.1); }
     .faq-item.open .faq-icon svg { transform: rotate(45deg); }
-    .faq-answer {
-      overflow: hidden; max-height: 0;
-      transition: max-height 400ms var(--ease), padding var(--t);
-    }
+    .faq-answer { overflow: hidden; max-height: 0; transition: max-height 400ms var(--ease); }
     .faq-answer-inner {
-      padding-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;
+      padding-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted); line-height: 1.85; font-weight: 300;
     }
 
     /* ─── CONTACT ─── */
@@ -611,34 +674,32 @@
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
     .contact-info-item { margin-bottom: 2rem; }
     .contact-info-label {
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 0.4rem;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.4rem; font-family: var(--font-body);
     }
-    .contact-info-value { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+    .contact-info-value { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; font-weight: 300; }
     .contact-info-value a { color: var(--white); transition: color var(--t); }
     .contact-info-value a:hover { color: var(--gold); }
-
     .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
     .form-group label {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--text-dim);
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-dim); font-family: var(--font-body);
     }
     .form-control {
-      padding: 0.85rem 1.1rem; min-height: 50px;
+      padding: 0.88rem 1.1rem; min-height: 50px;
       background: var(--surface-2); border: 1px solid var(--border);
       border-radius: var(--r-sm); font-size: 0.9rem; font-family: var(--font-body); color: var(--white);
-      transition: border-color var(--t), box-shadow var(--t);
-      -webkit-appearance: none;
+      transition: border-color var(--t), box-shadow var(--t); -webkit-appearance: none;
     }
     .form-control::placeholder { color: var(--text-dim); }
     .form-control:focus {
       outline: none; border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(201,185,154,0.12);
+      box-shadow: 0 0 0 3px rgba(201,185,154,0.1);
     }
     textarea.form-control { min-height: 130px; resize: vertical; }
     select.form-control option { background: var(--surface-2); }
-    .form-error { font-size: 0.72rem; color: #E05555; display: none; }
+    .form-error { font-size: 0.72rem; color: #E05555; display: none; font-family: var(--font-body); }
     .form-error.show { display: block; }
     .form-control.is-error { border-color: #E05555; }
 
@@ -650,32 +711,30 @@
     .footer-grid {
       display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3.5rem;
     }
-    .footer-brand svg { width: 40px; height: 40px; margin-bottom: 1rem; }
-    .footer-tagline { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; max-width: 260px; margin-top: 0.75rem; }
+    .footer-brand svg { height: 44px; width: auto; margin-bottom: 1rem; }
+    .footer-tagline { font-size: 0.85rem; color: var(--text-dim); line-height: 1.75; max-width: 260px; margin-top: 0.75rem; font-weight: 300; }
     .footer-social { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
     .footer-social-link {
-      width: 40px; height: 40px; border: 1px solid var(--border); border-radius: var(--r-sm);
+      width: 44px; height: 44px; border: 1px solid var(--border); border-radius: var(--r-sm);
       display: flex; align-items: center; justify-content: center;
       color: var(--text-dim); transition: border-color var(--t), color var(--t), background var(--t);
-      touch-action: manipulation; min-width: 44px; min-height: 44px;
+      touch-action: manipulation; cursor: none;
     }
     .footer-social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,185,154,0.05); }
     .footer-social-link:focus { outline: 2px solid var(--gold); outline-offset: 3px; }
     .footer-social-link svg { width: 18px; height: 18px; }
     .footer-col-title {
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1.5rem;
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem; font-family: var(--font-body);
     }
     .footer-links { display: flex; flex-direction: column; gap: 0.7rem; }
-    .footer-links a {
-      font-size: 0.85rem; color: var(--text-dim); transition: color var(--t);
-    }
+    .footer-links a { font-size: 0.85rem; color: var(--text-dim); transition: color var(--t); font-weight: 300; }
     .footer-links a:hover { color: var(--white); }
     .footer-links a:focus { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
     .footer-bottom {
       border-top: 1px solid var(--border); padding-top: 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; color: var(--text-dim);
+      flex-wrap: wrap; gap: 1rem; font-size: 0.75rem; color: var(--text-dim); font-weight: 300;
     }
     .footer-bottom a { color: var(--gold); }
 
@@ -694,14 +753,14 @@
 
     /* ─── SCROLL REVEAL ─── */
     .reveal {
-      opacity: 0; transform: translateY(28px);
+      opacity: 0; transform: translateY(24px);
       transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
     }
     .reveal.in { opacity: 1; transform: none; }
-    .reveal-d1 { transition-delay: 0.07s; }
-    .reveal-d2 { transition-delay: 0.14s; }
-    .reveal-d3 { transition-delay: 0.21s; }
-    .reveal-d4 { transition-delay: 0.28s; }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
@@ -714,9 +773,8 @@
       .pricing-card.featured:hover { transform: translateY(-6px); }
     }
     @media (max-width: 768px) {
-      :root { }
       section { padding: 5rem 0; }
-      .nav-links, .nav .btn { display: none; }
+      .nav-links, .nav .btn-gold { display: none; }
       .nav-ham { display: flex; }
       .services-grid  { grid-template-columns: 1fr; }
       .why-grid       { grid-template-columns: 1fr; gap: 3rem; }
@@ -735,36 +793,40 @@
       .hero-actions .btn { justify-content: center; }
       .why-stats { grid-template-columns: 1fr; }
     }
-
-    /* ─── LOGO SVG ─── */
-    .logo-mark path { fill: none; }
   </style>
 </head>
 <body>
 
 <a href="#main" class="skip-link">Skip to main content</a>
 
-<!-- ════════════════════════════════════
-     NAV
-════════════════════════════════════ -->
+<!-- Cursor -->
+<div class="cursor-orb" id="cursor-orb" aria-hidden="true"></div>
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+
+<!-- NAV -->
 <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
 
   <a href="#" class="nav-logo" aria-label="Byild Media — Home">
-    <!-- Logo Mark SVG — stylized ribbon B -->
     <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id="g1" x1="0" y1="0" x2="80" y2="100" gradientUnits="userSpaceOnUse">
           <stop offset="0%"   stop-color="#E2CFA8"/>
-          <stop offset="50%"  stop-color="#C9B99A"/>
+          <stop offset="45%"  stop-color="#C9B99A"/>
           <stop offset="100%" stop-color="#A8936E"/>
         </linearGradient>
+        <linearGradient id="g1h" x1="0" y1="0" x2="80" y2="100" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#F0DFB8"/>
+          <stop offset="100%" stop-color="#C9B99A"/>
+        </linearGradient>
       </defs>
-      <!-- Top loop -->
-      <path d="M 20 20 Q 20 5 40 5 Q 65 5 65 28 Q 65 48 45 52 L 35 55" stroke="url(#g1)" stroke-width="10" stroke-linecap="round"/>
-      <!-- Crossing band -->
-      <path d="M 35 55 Q 25 58 20 68 Q 14 80 20 88 Q 28 98 48 96 Q 65 94 65 78 Q 65 62 45 55 L 35 55" stroke="url(#g1)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-      <!-- Gold edge highlight -->
-      <path d="M 22 20 Q 22 8 40 8 Q 62 8 62 28 Q 62 46 44 50" stroke="#E8D5B0" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+      <!-- Ribbon top loop -->
+      <path d="M 20 22 Q 18 6 40 6 Q 64 6 64 28 Q 64 48 44 53 L 36 56" stroke="url(#g1)" stroke-width="11" stroke-linecap="round"/>
+      <!-- Ribbon bottom loop -->
+      <path d="M 36 56 Q 24 60 18 70 Q 12 82 20 90 Q 28 99 48 97 Q 66 95 66 78 Q 66 60 46 54 L 36 56" stroke="url(#g1)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Highlight edge top -->
+      <path d="M 22 22 Q 20 8 40 9 Q 62 9 61 28 Q 60 46 43 51" stroke="url(#g1h)" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+      <!-- Highlight edge bottom -->
+      <path d="M 34 58 Q 22 64 18 74 Q 14 85 22 92" stroke="url(#g1h)" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
     </svg>
   </a>
 
@@ -776,48 +838,51 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
 
-  <a href="#contact" class="btn btn-gold" style="display:none;" id="nav-cta">Get a Quote</a>
-
-  <button class="nav-ham" id="ham" aria-label="Open menu" aria-expanded="false" aria-controls="mob-nav">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-right">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+      </svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+      </svg>
+    </button>
+    <a href="#contact" class="btn btn-gold" style="display:none;" id="nav-cta">Get a Quote</a>
+    <button class="nav-ham" id="ham" aria-label="Open menu" aria-expanded="false" aria-controls="mob-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <div class="nav-mobile" id="mob-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
-  <a href="#services"     class="mob-link">Services</a>
-  <a href="#portfolio"    class="mob-link">Work</a>
-  <a href="#about"        class="mob-link">About</a>
-  <a href="#pricing"      class="mob-link">Pricing</a>
-  <a href="#contact"      class="mob-link">Contact</a>
+  <a href="#services"  class="mob-link">Services</a>
+  <a href="#portfolio" class="mob-link">Work</a>
+  <a href="#about"     class="mob-link">About</a>
+  <a href="#pricing"   class="mob-link">Pricing</a>
+  <a href="#contact"   class="mob-link">Contact</a>
 </div>
 
-<!-- ════════════════════════════════════
-     HERO
-════════════════════════════════════ -->
+<!-- HERO -->
 <main id="main">
-<section class="hero" aria-label="Byild Media — hero">
+<section class="hero" aria-label="Byild Media hero">
 
-  <!-- Background video -->
   <video class="hero-video" autoplay muted loop playsinline aria-hidden="true"
     poster="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1920&q=80&auto=format">
     <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-of-person-programming-on-a-laptop-1169-large.mp4" type="video/mp4">
   </video>
   <div class="hero-video-overlay" aria-hidden="true"></div>
-
-  <!-- Fallback decorative elements -->
   <div class="hero-bg-fallback" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
   <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
   <div class="hero-grid" aria-hidden="true"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Web Design Agency · India</div>
     <h1 class="hero-h1">
       Websites That<br>
       <span class="line-gold">Make You Money</span>
     </h1>
     <p class="hero-sub">
-      We don't just build websites — we build digital experiences that convert visitors into customers. Clean, fast, and built to grow your business.
+      We build digital experiences that turn visitors into customers. Clean, fast, and crafted to grow your business.
     </p>
     <div class="hero-actions">
       <a href="#pricing" class="btn btn-gold">See Pricing</a>
@@ -832,12 +897,9 @@
 
 </section>
 
-<!-- ════════════════════════════════════
-     MARQUEE
-════════════════════════════════════ -->
+<!-- MARQUEE -->
 <div class="marquee-strip" aria-hidden="true">
   <div class="marquee-track">
-    <!-- doubled for seamless loop -->
     <span class="marquee-item">Web Design</span>
     <span class="marquee-item">Landing Pages</span>
     <span class="marquee-item">Website Redesign</span>
@@ -857,28 +919,22 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     SERVICES
-════════════════════════════════════ -->
+<!-- SERVICES -->
 <section id="services">
   <div class="container">
     <div class="reveal">
       <span class="section-label">What We Do</span>
       <h2 class="section-title">Services Built for<br><span class="gold">Real Business Results</span></h2>
-      <p class="section-sub">Every service we offer is designed with one goal — to make your business look credible, attract customers, and grow online.</p>
+      <p class="section-sub">Every service we offer is designed with one goal: to make your business look credible, attract customers, and grow online.</p>
     </div>
-
     <div class="services-grid">
-
       <div class="service-card reveal reveal-d1">
         <span class="service-num">01</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
         <h3 class="service-title">Website Design</h3>
-        <p class="service-desc">Custom, conversion-focused websites designed from scratch. We handle everything — design, development, copy structure, and launch. Your website will stand out in your market.</p>
+        <p class="service-desc">Custom, conversion-focused websites designed from scratch. We handle everything: design, development, copy structure, and launch. Your website will stand out.</p>
         <div class="service-tags">
           <span class="service-tag">Custom Design</span>
           <span class="service-tag">Mobile Responsive</span>
@@ -886,16 +942,13 @@
           <span class="service-tag">Fast Loading</span>
         </div>
       </div>
-
       <div class="service-card reveal reveal-d2">
         <span class="service-num">02</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
         <h3 class="service-title">Landing Page Design</h3>
-        <p class="service-desc">High-converting single pages built to turn ad traffic into leads and sales. We design with psychology — the right layout, the right words, the right CTA at every scroll point.</p>
+        <p class="service-desc">High-converting single pages built to turn ad traffic into leads and sales. We design with psychology: the right layout, the right words, the right CTA at every scroll point.</p>
         <div class="service-tags">
           <span class="service-tag">A/B Ready</span>
           <span class="service-tag">High Conversion</span>
@@ -903,16 +956,13 @@
           <span class="service-tag">Fast Turnaround</span>
         </div>
       </div>
-
       <div class="service-card reveal reveal-d3">
         <span class="service-num">03</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <h3 class="service-title">Website Maintenance</h3>
-        <p class="service-desc">We keep your website updated, secure, and running at full speed every month. No more "who do I call when something breaks?" — we're already on it before you notice.</p>
+        <p class="service-desc">We keep your website updated, secure, and running at full speed every month. No more wondering who to call when something breaks. We are already on it.</p>
         <div class="service-tags">
           <span class="service-tag">Monthly Updates</span>
           <span class="service-tag">Security Monitoring</span>
@@ -920,16 +970,13 @@
           <span class="service-tag">Priority Support</span>
         </div>
       </div>
-
       <div class="service-card reveal reveal-d4">
         <span class="service-num">04</span>
         <div class="service-icon">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 4l16 16M4 20L20 4"/><circle cx="12" cy="12" r="3"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l16 16M4 20L20 4"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
         <h3 class="service-title">Website Redesign</h3>
-        <p class="service-desc">Your old website is costing you customers. We take what you have, identify what's broken, and redesign it into something that actually performs — modern, fast, and on-brand.</p>
+        <p class="service-desc">Your old website is costing you customers. We identify what is broken and redesign it into something that actually performs: modern, fast, and on-brand.</p>
         <div class="service-tags">
           <span class="service-tag">Brand Refresh</span>
           <span class="service-tag">Performance Audit</span>
@@ -937,30 +984,25 @@
           <span class="service-tag">UX Overhaul</span>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     WHY CHOOSE US
-════════════════════════════════════ -->
+<!-- WHY CHOOSE US -->
 <section id="why">
   <div class="container">
     <div class="reveal">
       <span class="section-label">Why Byild Media</span>
-      <h2 class="section-title">We're Different,<br>and Here's <span class="gold">How</span></h2>
+      <h2 class="section-title">We Are Different,<br>and Here Is <span class="gold">How</span></h2>
     </div>
-
     <div class="why-grid">
-
       <div class="why-visual reveal">
         <div class="why-card-main">
-          <div class="why-big-num">50+</div>
+          <div class="why-big-num" data-count="50" data-suffix="+">0+</div>
           <div class="why-big-label">Projects delivered across industries</div>
           <div class="why-stats">
             <div class="why-stat">
-              <div class="why-stat-num">100%</div>
+              <div class="why-stat-num" data-count="100" data-suffix="%">0%</div>
               <div class="why-stat-lbl">Client Satisfaction</div>
             </div>
             <div class="why-stat">
@@ -978,199 +1020,140 @@
           </div>
         </div>
       </div>
-
       <div class="why-points reveal reveal-d2">
-
         <div class="why-point">
           <div class="why-point-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <div>
             <div class="why-point-title">Results-First Approach</div>
-            <div class="why-point-desc">We don't design for awards — we design for your business goals. Every decision is made to get you more leads, calls, and sales.</div>
+            <div class="why-point-desc">We do not design for awards. We design for your business goals. Every decision is made to get you more leads, calls, and sales.</div>
           </div>
         </div>
-
         <div class="why-point">
           <div class="why-point-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
           <div>
             <div class="why-point-title">Fast Turnaround</div>
-            <div class="why-point-desc">Most agencies take months. We deliver in days — without cutting corners on quality. You'll have a live site faster than you think.</div>
+            <div class="why-point-desc">Most agencies take months. We deliver in days without cutting corners on quality. You will have a live site faster than you think.</div>
           </div>
         </div>
-
         <div class="why-point">
           <div class="why-point-icon">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
           </div>
           <div>
             <div class="why-point-title">You Own Everything</div>
-            <div class="why-point-desc">No lock-in. No subscriptions to us just to access your own site. Everything we build belongs to you — fully.</div>
+            <div class="why-point-desc">No lock-in. No subscriptions just to access your own site. Everything we build belongs to you, fully.</div>
           </div>
         </div>
-
         <div class="why-point">
           <div class="why-point-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 8.25h3m-3 3.75h3m-3 3.75h3"/></svg>
           </div>
           <div>
             <div class="why-point-title">Transparent Pricing</div>
-            <div class="why-point-desc">You know exactly what you're paying and what you're getting — before we start. No surprise invoices, no scope creep fees.</div>
+            <div class="why-point-desc">You know exactly what you are paying and what you are getting before we start. No surprise invoices, no scope creep fees.</div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     PORTFOLIO
-════════════════════════════════════ -->
+<!-- PORTFOLIO -->
 <section id="portfolio">
   <div class="container">
     <div class="text-center reveal">
       <span class="section-label">Our Work</span>
       <h2 class="section-title">Recent Projects</h2>
-      <p class="section-sub">A selection of websites and landing pages we've designed and built for clients across industries.</p>
+      <p class="section-sub">A selection of websites and landing pages we have designed and built for clients across industries.</p>
     </div>
-
     <div class="portfolio-grid">
-
       <div class="portfolio-card reveal reveal-d1">
-        <img
-          src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80&auto=format"
-          alt="E-commerce website design project by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80&auto=format" alt="E-commerce website design project by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">E-Commerce</div>
           <div class="portfolio-name">Fashion Boutique Website</div>
         </div>
       </div>
-
       <div class="portfolio-card reveal reveal-d2">
-        <img
-          src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&q=80&auto=format"
-          alt="SaaS landing page design project by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&q=80&auto=format" alt="SaaS landing page design by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">Landing Page</div>
           <div class="portfolio-name">SaaS Product Launch</div>
         </div>
       </div>
-
       <div class="portfolio-card reveal reveal-d3">
-        <img
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format"
-          alt="Corporate website redesign project by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format" alt="Corporate website redesign by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">Redesign</div>
           <div class="portfolio-name">Corporate Rebrand</div>
         </div>
       </div>
-
       <div class="portfolio-card reveal">
-        <img
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80&auto=format"
-          alt="Restaurant website design project by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&q=80&auto=format" alt="Restaurant website design by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">Website Design</div>
           <div class="portfolio-name">Restaurant &amp; Dining</div>
         </div>
       </div>
-
       <div class="portfolio-card reveal reveal-d2">
-        <img
-          src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format"
-          alt="Consulting firm website design by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80&auto=format" alt="Consulting firm website by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">Landing Page</div>
           <div class="portfolio-name">Consulting Firm</div>
         </div>
       </div>
-
       <div class="portfolio-card reveal reveal-d3">
-        <img
-          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format"
-          alt="Real estate website design project by Byild Media"
-          class="portfolio-img" loading="lazy" width="600" height="450"
-        >
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80&auto=format" alt="Real estate website design by Byild Media" class="portfolio-img" loading="lazy" width="600" height="450">
         <div class="portfolio-overlay">
           <div class="portfolio-cat">Redesign</div>
           <div class="portfolio-name">Real Estate Agency</div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     PROCESS
-════════════════════════════════════ -->
+<!-- PROCESS -->
 <section id="process">
   <div class="container">
     <div class="text-center reveal">
       <span class="section-label">How We Work</span>
       <h2 class="section-title">Our Process</h2>
-      <p class="section-sub">Simple, transparent, and fast. From the first call to your live website — here's exactly what working with us looks like.</p>
+      <p class="section-sub">Simple, transparent, and fast. From the first call to your live website, here is exactly what working with us looks like.</p>
     </div>
-
     <div class="process-steps">
-
       <div class="process-step reveal reveal-d1">
-        <div class="process-num-wrap">
-          <span class="process-num">01</span>
-        </div>
+        <div class="process-num-wrap"><span class="process-num">01</span></div>
         <h3 class="process-title">Discovery Call</h3>
         <p class="process-desc">We learn about your business, goals, target audience, and what you need the website to do. No forms, just a real conversation.</p>
       </div>
-
       <div class="process-step reveal reveal-d2">
-        <div class="process-num-wrap">
-          <span class="process-num">02</span>
-        </div>
-        <h3 class="process-title">Design &amp; Proposal</h3>
+        <div class="process-num-wrap"><span class="process-num">02</span></div>
+        <h3 class="process-title">Design and Proposal</h3>
         <p class="process-desc">We come back with a clear plan, timeline, and fixed price. You approve the direction before we start building anything.</p>
       </div>
-
       <div class="process-step reveal reveal-d3">
-        <div class="process-num-wrap">
-          <span class="process-num">03</span>
-        </div>
-        <h3 class="process-title">Build &amp; Review</h3>
-        <p class="process-desc">We build, you review. Two rounds of revisions included — we iterate until you're fully happy with every detail.</p>
+        <div class="process-num-wrap"><span class="process-num">03</span></div>
+        <h3 class="process-title">Build and Review</h3>
+        <p class="process-desc">We build, you review. Two rounds of revisions included. We iterate until you are fully happy with every detail.</p>
       </div>
-
       <div class="process-step reveal reveal-d4">
-        <div class="process-num-wrap">
-          <span class="process-num">04</span>
-        </div>
-        <h3 class="process-title">Launch &amp; Support</h3>
+        <div class="process-num-wrap"><span class="process-num">04</span></div>
+        <h3 class="process-title">Launch and Support</h3>
         <p class="process-desc">We push it live, hand over everything, and stay available for 30 days post-launch to handle any questions or tweaks.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     ABOUT
-════════════════════════════════════ -->
+<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
-
       <div class="about-visual-wrap reveal">
         <div class="about-img-placeholder">
           <div class="about-logo-big">
@@ -1178,23 +1161,22 @@
               <defs>
                 <linearGradient id="g2" x1="0" y1="0" x2="80" y2="100" gradientUnits="userSpaceOnUse">
                   <stop offset="0%"   stop-color="#E2CFA8"/>
-                  <stop offset="50%"  stop-color="#C9B99A"/>
+                  <stop offset="45%"  stop-color="#C9B99A"/>
                   <stop offset="100%" stop-color="#A8936E"/>
                 </linearGradient>
               </defs>
-              <path d="M 20 20 Q 20 5 40 5 Q 65 5 65 28 Q 65 48 45 52 L 35 55" stroke="url(#g2)" stroke-width="10" stroke-linecap="round"/>
-              <path d="M 35 55 Q 25 58 20 68 Q 14 80 20 88 Q 28 98 48 96 Q 65 94 65 78 Q 65 62 45 55 L 35 55" stroke="url(#g2)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M 22 20 Q 22 8 40 8 Q 62 8 62 28 Q 62 46 44 50" stroke="#E8D5B0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+              <path d="M 20 22 Q 18 6 40 6 Q 64 6 64 28 Q 64 48 44 53 L 36 56" stroke="url(#g2)" stroke-width="11" stroke-linecap="round"/>
+              <path d="M 36 56 Q 24 60 18 70 Q 12 82 20 90 Q 28 99 48 97 Q 66 95 66 78 Q 66 60 46 54 L 36 56" stroke="url(#g2)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 22 22 Q 20 8 40 9 Q 62 9 61 28 Q 60 46 43 51" stroke="#E8D5B0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
             </svg>
           </div>
-          <span style="font-size:0.7rem; color: var(--text-dim); letter-spacing: 0.15em; text-transform: uppercase;">Byild Media</span>
+          <span style="font-size:0.65rem; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; font-family: var(--font-body);">Byild Media</span>
         </div>
         <div class="about-floating-card" aria-label="50+ happy clients">
           <div class="about-floating-num">50+</div>
           <div class="about-floating-lbl">Happy Clients</div>
         </div>
       </div>
-
       <div class="about-text reveal reveal-d2">
         <span class="section-label">About Us</span>
         <h2 class="section-title">We Build Websites<br><span class="gold">That Earn Their Keep</span></h2>
@@ -1204,72 +1186,62 @@
           <span class="about-cert">Remote-First</span>
         </div>
         <p>Byild Media is a web design agency focused on one thing: building digital presence that delivers real business value. We work with startups, SMEs, and solo founders who are serious about growing online.</p>
-        <p>We're not a factory. We take on a limited number of projects each month so we can give every client the attention their business deserves. When you work with Byild Media, you get direct access to the person designing your site — not a ticketing system.</p>
-        <p>Our work spans industries — from e-commerce and hospitality to SaaS and consulting. What stays the same is our process: fast, transparent, and genuinely collaborative.</p>
+        <p>We are not a factory. We take on a limited number of projects each month so every client gets the attention their business deserves. When you work with Byild Media, you get direct access to the person designing your site.</p>
+        <p>Our work spans industries: from e-commerce and hospitality to SaaS and consulting. What stays constant is our process: fast, transparent, and genuinely collaborative.</p>
         <div style="margin-top: 2rem;">
           <a href="#contact" class="btn btn-gold">Start a Project</a>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     TESTIMONIALS
-════════════════════════════════════ -->
+<!-- TESTIMONIALS -->
 <section id="testimonials">
   <div class="container">
     <div class="text-center reveal">
       <span class="section-label">Client Stories</span>
       <h2 class="section-title">What Our Clients Say</h2>
     </div>
-
     <div class="testi-grid">
-
       <div class="testi-card reveal reveal-d1">
-        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p class="testi-quote">Byild Media delivered our website in under a week and it looks better than anything we'd seen in our budget. We started getting enquiries within 3 days of going live.</p>
+        <div class="testi-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-quote">Byild Media delivered our website in under a week and it looks better than anything we had seen in our budget. We started getting enquiries within 3 days of going live.</p>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">R</div>
           <div>
             <div class="testi-name">Rohan Gupta</div>
-            <div class="testi-role">Founder, Gupta Interiors — Delhi</div>
+            <div class="testi-role">Founder, Gupta Interiors, Delhi</div>
           </div>
         </div>
       </div>
-
       <div class="testi-card reveal reveal-d2">
-        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <div class="testi-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-quote">Our old website was embarrassing. The redesign Byild Media did made us look like a proper company for the first time. Clients actually comment on it now.</p>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">S</div>
           <div>
             <div class="testi-name">Sneha Mehta</div>
-            <div class="testi-role">Director, Mehta Legal Associates — Mumbai</div>
+            <div class="testi-role">Director, Mehta Legal Associates, Mumbai</div>
           </div>
         </div>
       </div>
-
       <div class="testi-card reveal reveal-d3">
-        <div class="testi-stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p class="testi-quote">The landing page they built for our product launch converted at 14% — more than double what our previous page did. I can't recommend them enough.</p>
+        <div class="testi-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testi-quote">The landing page they built for our product launch converted at 14%, more than double what our previous page did. I cannot recommend them enough.</p>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">A</div>
           <div>
             <div class="testi-name">Arjun Nair</div>
-            <div class="testi-role">Co-Founder, ClarkSaaS — Bangalore</div>
+            <div class="testi-role">Co-Founder, ClarkSaaS, Bangalore</div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     PRICING
-════════════════════════════════════ -->
+<!-- PRICING -->
 <section id="pricing">
   <div class="container">
     <div class="text-center reveal">
@@ -1277,15 +1249,13 @@
       <h2 class="section-title">Simple, Honest Pricing</h2>
       <p class="section-sub">No hidden fees. No monthly subscriptions. You pay once, you own it completely.</p>
     </div>
-
     <div class="pricing-grid">
-
       <!-- Basic -->
       <div class="pricing-card reveal reveal-d1">
         <div class="pricing-plan">Starter</div>
         <div class="pricing-name">Basic Website</div>
         <div class="pricing-amount">
-          <span class="pricing-currency">₹</span>
+          <span class="pricing-currency">&#8377;</span>
           <span class="pricing-num">10,000</span>
         </div>
         <div class="pricing-period">One-time payment</div>
@@ -1303,14 +1273,13 @@
         </ul>
         <a href="#contact" class="btn btn-outline pricing-cta">Get Started</a>
       </div>
-
-      <!-- Standard — Featured -->
+      <!-- Standard -->
       <div class="pricing-card featured reveal reveal-d2">
         <div class="pricing-badge">Most Popular</div>
         <div class="pricing-plan">Growth</div>
         <div class="pricing-name">Standard Website</div>
         <div class="pricing-amount">
-          <span class="pricing-currency">₹</span>
+          <span class="pricing-currency">&#8377;</span>
           <span class="pricing-num">20,000</span>
         </div>
         <div class="pricing-period">One-time payment</div>
@@ -1319,7 +1288,7 @@
         <ul class="pricing-features" role="list">
           <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Up to 10 pages</li>
           <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Premium UI/UX design</li>
-          <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Custom animations &amp; transitions</li>
+          <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Custom animations and transitions</li>
           <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Full SEO optimisation</li>
           <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Blog / CMS integration</li>
           <li class="pricing-feature"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Google Analytics setup</li>
@@ -1328,18 +1297,15 @@
         </ul>
         <a href="#contact" class="btn btn-gold pricing-cta">Get Started</a>
       </div>
-
       <!-- Custom -->
       <div class="pricing-card reveal reveal-d3">
         <div class="pricing-plan">Enterprise</div>
         <div class="pricing-name">Custom Project</div>
-        <div class="pricing-custom-content">
+        <div style="text-align:center; padding: 1rem 0;">
           <div class="pricing-custom-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
           </div>
-        </div>
-        <div style="text-align:center; margin-bottom: 1rem;">
-          <div style="font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; color: var(--gold);">Let's Talk</div>
+          <div style="font-family: var(--font-head); font-size: 1.6rem; font-weight: 600; color: var(--gold);">Let's Talk</div>
           <div class="pricing-period" style="margin-top: 0.5rem;">Custom quote after discovery call</div>
         </div>
         <div class="pricing-note" style="text-align: center; margin-bottom: 2rem;">Best for: E-commerce, web apps, complex projects, large brands</div>
@@ -1354,135 +1320,105 @@
         </ul>
         <a href="#contact" class="btn btn-outline pricing-cta">Book a Call</a>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     FAQ
-════════════════════════════════════ -->
+<!-- FAQ -->
 <section id="faq">
   <div class="container">
     <div class="text-center reveal">
       <span class="section-label">FAQ</span>
       <h2 class="section-title">Frequently Asked Questions</h2>
     </div>
-
     <ul class="faq-list reveal reveal-d1" role="list">
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
           <span class="faq-q">How long does it take to build my website?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">For the Basic plan, most websites are ready in 5–7 business days. The Standard plan typically takes 10–14 days depending on the number of pages and complexity. Custom projects are scoped individually on our discovery call.</div>
+          <div class="faq-answer-inner">For the Basic plan, most websites are ready in 5 to 7 business days. The Standard plan typically takes 10 to 14 days depending on the number of pages and complexity. Custom projects are scoped individually on our discovery call.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
           <span class="faq-q">Do I need to provide content and images?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Ideally yes — you know your business best. But if you're stuck, we can help with placeholder copy, stock photography, and structure suggestions. Premium copywriting and photography sourcing are available as add-ons.</div>
+          <div class="faq-answer-inner">Ideally yes, you know your business best. But if you are stuck, we can help with placeholder copy, stock photography, and structure suggestions. Premium copywriting and photography sourcing are available as add-ons.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
           <span class="faq-q">Will I be able to update the website myself?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Yes. If you want a CMS (like WordPress or Webflow), we set it up so you can update text, images, and blog posts yourself without touching any code. We'll also walk you through how to use it on handover.</div>
+          <div class="faq-answer-inner">Yes. If you want a CMS like WordPress or Webflow, we set it up so you can update text, images, and blog posts yourself without touching any code. We walk you through everything on handover.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
-          <span class="faq-q">What's included in website maintenance?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-q">What is included in website maintenance?</span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Our maintenance plans cover plugin and CMS updates, security monitoring, uptime monitoring, monthly performance reports, and minor content changes (up to 2 hours/month). Pricing is discussed based on your site's complexity.</div>
+          <div class="faq-answer-inner">Our maintenance plans cover plugin and CMS updates, security monitoring, uptime monitoring, monthly performance reports, and minor content changes (up to 2 hours per month). Pricing is discussed based on your site's complexity.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
           <span class="faq-q">Do you offer hosting?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">We don't resell hosting — we help you choose and set up the best hosting for your site (usually a tier-1 provider like Cloudflare Pages, Vercel, or SiteGround). This means you pay the provider directly with no markup from us, and you own the account fully.</div>
+          <div class="faq-answer-inner">We do not resell hosting. We help you choose and set up the best hosting for your site (usually Cloudflare Pages, Vercel, or SiteGround). You pay the provider directly with no markup from us, and you own the account fully.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
           <span class="faq-q">How do payments work?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">We take 50% upfront to begin the project and 50% on completion — before the site goes live. For custom projects above ₹50,000, we can discuss milestone-based payment schedules. We accept bank transfer and UPI.</div>
+          <div class="faq-answer-inner">We take 50% upfront to begin the project and 50% on completion before the site goes live. For custom projects above Rs. 50,000, we can discuss milestone-based payment schedules. We accept bank transfer and UPI.</div>
         </div>
       </li>
-
       <li class="faq-item">
         <button class="faq-btn" aria-expanded="false">
-          <span class="faq-q">What if I don't like the design?</span>
-          <span class="faq-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
+          <span class="faq-q">What if I do not like the design?</span>
+          <span class="faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
         </button>
         <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">We share designs before building and include revision rounds in every plan. We've also never had a client who was unhappy — because we do a thorough discovery call before we start. If for any reason a project isn't working out, we handle it professionally and fairly.</div>
+          <div class="faq-answer-inner">We share designs before building and include revision rounds in every plan. We also do a thorough discovery call before we start. If for any reason a project is not working out, we handle it professionally and fairly.</div>
         </div>
       </li>
-
     </ul>
   </div>
 </section>
 
-<!-- ════════════════════════════════════
-     CONTACT
-════════════════════════════════════ -->
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
     <div class="contact-grid">
-
       <div>
         <span class="section-label reveal">Get in Touch</span>
         <h2 class="section-title reveal reveal-d1">Ready to Build<br><span class="gold">Something Great?</span></h2>
-        <p class="section-sub reveal reveal-d2" style="margin-top: 1rem;">Tell us about your project and we'll get back to you within 24 hours with a plan and next steps.</p>
-
+        <p class="section-sub reveal reveal-d2" style="margin-top: 1rem;">Tell us about your project and we will get back to you within 24 hours with a plan and next steps.</p>
         <div style="margin-top: 3rem;" class="reveal reveal-d2">
           <div class="contact-info-item">
             <div class="contact-info-label">Email Us</div>
-            <div class="contact-info-value"><a href="mailto:hello@byildmedia.com">hello@byildmedia.com</a></div>
+            <div class="contact-info-value"><a href="mailto:company@byildmedia.com">company@byildmedia.com</a></div>
           </div>
           <div class="contact-info-item">
             <div class="contact-info-label">WhatsApp</div>
-            <div class="contact-info-value"><a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener">+91 XXXXX XXXXX</a></div>
+            <div class="contact-info-value"><a href="https://wa.me/919845678901" target="_blank" rel="noopener">+91 98456 78901</a></div>
           </div>
           <div class="contact-info-item">
             <div class="contact-info-label">Response Time</div>
-            <div class="contact-info-value">Usually within 24 hours, Mon–Sat</div>
+            <div class="contact-info-value">Usually within 24 hours, Mon to Sat</div>
           </div>
           <div class="contact-info-item">
             <div class="contact-info-label">Follow Our Work</div>
@@ -1497,30 +1433,26 @@
           </div>
         </div>
       </div>
-
       <div class="reveal reveal-d2">
         <form class="contact-form" id="contact-form" novalidate aria-label="Contact form">
           <div class="form-group">
             <label for="cf-name">Your Name *</label>
-            <input class="form-control" type="text" id="cf-name" name="name"
-              placeholder="Rohan Sharma" required aria-required="true" autocomplete="name">
+            <input class="form-control" type="text" id="cf-name" name="name" placeholder="Rohan Sharma" required aria-required="true" autocomplete="name">
             <span class="form-error" id="cf-name-err" role="alert">Please enter your name.</span>
           </div>
           <div class="form-group">
             <label for="cf-email">Email Address *</label>
-            <input class="form-control" type="email" id="cf-email" name="email"
-              placeholder="rohan@company.com" required aria-required="true" autocomplete="email">
+            <input class="form-control" type="email" id="cf-email" name="email" placeholder="rohan@company.com" required aria-required="true" autocomplete="email">
             <span class="form-error" id="cf-email-err" role="alert">Please enter a valid email.</span>
           </div>
           <div class="form-group">
             <label for="cf-phone">Phone / WhatsApp</label>
-            <input class="form-control" type="tel" id="cf-phone" name="phone"
-              placeholder="+91 98765 43210" autocomplete="tel">
+            <input class="form-control" type="tel" id="cf-phone" name="phone" placeholder="+91 98765 43210" autocomplete="tel">
           </div>
           <div class="form-group">
             <label for="cf-service">Service Interested In *</label>
             <select class="form-control" id="cf-service" name="service" required aria-required="true">
-              <option value="">Select a service…</option>
+              <option value="">Select a service...</option>
               <option value="website">Website Design</option>
               <option value="landing">Landing Page</option>
               <option value="redesign">Website Redesign</option>
@@ -1532,52 +1464,45 @@
           <div class="form-group">
             <label for="cf-budget">Budget Range</label>
             <select class="form-control" id="cf-budget" name="budget">
-              <option value="">Select range…</option>
-              <option value="10k">₹10,000 (Basic)</option>
-              <option value="20k">₹20,000 (Standard)</option>
-              <option value="custom">₹20,000+ (Custom)</option>
+              <option value="">Select range...</option>
+              <option value="10k">Rs. 10,000 (Basic)</option>
+              <option value="20k">Rs. 20,000 (Standard)</option>
+              <option value="custom">Rs. 20,000+ (Custom)</option>
               <option value="unsure">Not sure yet</option>
             </select>
           </div>
           <div class="form-group">
             <label for="cf-message">Tell Us About Your Project *</label>
-            <textarea class="form-control" id="cf-message" name="message"
-              placeholder="What does your business do? What do you need the website to achieve?"
-              required aria-required="true"></textarea>
+            <textarea class="form-control" id="cf-message" name="message" placeholder="What does your business do? What do you need the website to achieve?" required aria-required="true"></textarea>
             <span class="form-error" id="cf-msg-err" role="alert">Please tell us about your project.</span>
           </div>
-          <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center; font-size:0.85rem;" id="cf-submit">
+          <button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;" id="cf-submit">
             <span class="cf-txt">Send Message</span>
             <span class="cf-spin" style="display:none; width:16px; height:16px; border-radius:50%; border:2px solid rgba(0,0,0,0.2); border-top-color:#000; animation: spin 0.6s linear infinite;" aria-hidden="true"></span>
           </button>
         </form>
       </div>
-
     </div>
   </div>
 </section>
-
 </main>
 
-<!-- ════════════════════════════════════
-     FOOTER
-════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer>
   <div class="container">
     <div class="footer-grid">
-
       <div class="footer-brand">
         <svg viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <linearGradient id="g3" x1="0" y1="0" x2="80" y2="100" gradientUnits="userSpaceOnUse">
               <stop offset="0%"   stop-color="#E2CFA8"/>
-              <stop offset="50%"  stop-color="#C9B99A"/>
+              <stop offset="45%"  stop-color="#C9B99A"/>
               <stop offset="100%" stop-color="#A8936E"/>
             </linearGradient>
           </defs>
-          <path d="M 20 20 Q 20 5 40 5 Q 65 5 65 28 Q 65 48 45 52 L 35 55" stroke="url(#g3)" stroke-width="10" stroke-linecap="round"/>
-          <path d="M 35 55 Q 25 58 20 68 Q 14 80 20 88 Q 28 98 48 96 Q 65 94 65 78 Q 65 62 45 55 L 35 55" stroke="url(#g3)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M 22 20 Q 22 8 40 8 Q 62 8 62 28 Q 62 46 44 50" stroke="#E8D5B0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+          <path d="M 20 22 Q 18 6 40 6 Q 64 6 64 28 Q 64 48 44 53 L 36 56" stroke="url(#g3)" stroke-width="11" stroke-linecap="round"/>
+          <path d="M 36 56 Q 24 60 18 70 Q 12 82 20 90 Q 28 99 48 97 Q 66 95 66 78 Q 66 60 46 54 L 36 56" stroke="url(#g3)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 22 22 Q 20 8 40 9 Q 62 9 61 28 Q 60 46 43 51" stroke="#E8D5B0" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
         </svg>
         <p class="footer-tagline">We build websites that work as hard as you do. Design-first, results-driven, always on time.</p>
         <div class="footer-social" role="list" aria-label="Social media links">
@@ -1589,7 +1514,6 @@
           </a>
         </div>
       </div>
-
       <div>
         <div class="footer-col-title">Services</div>
         <ul class="footer-links" role="list">
@@ -1599,7 +1523,6 @@
           <li><a href="#services">Maintenance</a></li>
         </ul>
       </div>
-
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links" role="list">
@@ -1609,43 +1532,78 @@
           <li><a href="#process">Our Process</a></li>
         </ul>
       </div>
-
       <div>
         <div class="footer-col-title">Get Started</div>
         <ul class="footer-links" role="list">
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact Us</a></li>
-          <li><a href="mailto:hello@byildmedia.com">hello@byildmedia.com</a></li>
+          <li><a href="mailto:company@byildmedia.com">company@byildmedia.com</a></li>
         </ul>
       </div>
-
     </div>
-
     <div class="footer-bottom">
-      <span>© 2025 Byild Media. All rights reserved.</span>
-      <span>Built by <a href="#" aria-label="Byild Media">Byild Media</a> · India</span>
+      <span>&#169; 2025 Byild Media. All rights reserved.</span>
+      <span>Built by <a href="#" aria-label="Byild Media">Byild Media</a>, India</span>
     </div>
   </div>
 </footer>
 
-<!-- Toast -->
 <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
-  <span class="toast-icon">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-  </span>
+  <span class="toast-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
   <span id="toast-msg">Message sent!</span>
 </div>
 
-<!-- ════════════════════════════════════
-     JS
-════════════════════════════════════ -->
+<style>
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
 <script>
 (function(){
   'use strict';
 
+  // ── Theme toggle ────────────────────────────
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('bm-theme') || 'dark';
+  html.setAttribute('data-theme', savedTheme);
+
+  themeBtn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('bm-theme', next);
+  });
+
+  // ── Custom cursor ────────────────────────────
+  const orb = document.getElementById('cursor-orb');
+  const dot = document.getElementById('cursor-dot');
+  let ox = -100, oy = -100, tx = -100, ty = -100;
+  let rafId;
+
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+
+  function animCursor() {
+    ox += (tx - ox) * 0.10;
+    oy += (ty - oy) * 0.10;
+    orb.style.left = ox + 'px';
+    orb.style.top  = oy + 'px';
+    dot.style.left = tx + 'px';
+    dot.style.top  = ty + 'px';
+    rafId = requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  const hoverEls = document.querySelectorAll('a, button, .service-card, .portfolio-card, .testi-card, .pricing-card, .why-point, .faq-btn');
+  hoverEls.forEach(el => {
+    el.addEventListener('mouseenter', () => orb.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => orb.classList.remove('expanded'));
+  });
+
+  document.addEventListener('mouseleave', () => { orb.style.opacity = '0'; dot.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { orb.style.opacity = '1'; dot.style.opacity = '1'; });
+
   // ── Nav scroll ──────────────────────────────
-  const nav   = document.getElementById('nav');
+  const nav    = document.getElementById('nav');
   const navCta = document.getElementById('nav-cta');
   let tick = false;
   window.addEventListener('scroll', () => {
@@ -1684,11 +1642,41 @@
   const revEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
     revEls.forEach(el => io.observe(el));
   } else {
     revEls.forEach(el => el.classList.add('in'));
+  }
+
+  // ── Count-up animation ──────────────────────
+  function countUp(el) {
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1400;
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(ease * target) + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  const countEls = document.querySelectorAll('[data-count]');
+  if ('IntersectionObserver' in window) {
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); }
+      });
+    }, { threshold: 0.5 });
+    countEls.forEach(el => cio.observe(el));
   }
 
   // ── FAQ accordion ───────────────────────────
@@ -1698,7 +1686,6 @@
       const answer = item.querySelector('.faq-answer');
       const isOpen = item.classList.contains('open');
 
-      // close all
       document.querySelectorAll('.faq-item.open').forEach(el => {
         el.classList.remove('open');
         el.querySelector('.faq-answer').style.maxHeight = null;
@@ -1714,7 +1701,7 @@
   });
 
   // ── Toast ───────────────────────────────────
-  function toast(msg) {
+  function showToast(msg) {
     const t = document.getElementById('toast');
     document.getElementById('toast-msg').textContent = msg;
     t.classList.add('show');
@@ -1758,17 +1745,16 @@
     cfSpin.style.display = 'inline-block';
     cfBtn.disabled = true;
 
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise(r => setTimeout(r, 1600));
 
     cfTxt.style.display = '';
     cfSpin.style.display = 'none';
     cfBtn.disabled = false;
     form.reset();
-    toast('Message sent! We\'ll be in touch within 24 hours.');
+    showToast('Message sent! We will be in touch within 24 hours.');
   });
 
 })();
 </script>
-
 </body>
 </html>
