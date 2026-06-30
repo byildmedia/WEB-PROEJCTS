@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deja Bru — Specialty Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --bg:          #F4EFE6;
+      --bg-offset:   #EDE6D9;
+      --text:        #1B1612;
+      --text-sub:    #5A4F45;
+      --accent:      #B85C38;
+      --accent-hover:#A04D2E;
+      --hairline:    rgba(27,22,18,0.15);
+      --img-tone:    #D9D0C4;
+      --img-label:   #9A8F84;
+      --transition:  color .25s ease, background-color .25s ease, border-color .25s ease;
+    }
+    [data-theme="dark"] {
+      --bg:          #141210;
+      --bg-offset:   #1E1A17;
+      --text:        #EDE8DE;
+      --text-sub:    #9A8F84;
+      --accent:      #C96A42;
+      --accent-hover:#D97A52;
+      --hairline:    rgba(237,232,222,0.12);
+      --img-tone:    #2A2420;
+      --img-label:   #6A5F55;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─── TYPOGRAPHY ─────────────────────────────────────────── */
+    .serif { font-family: 'Fraunces', serif; font-weight: 300; }
+    .label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+
+    /* ─── LAYOUT UTILITIES ───────────────────────────────────── */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 5rem);
+    }
+    .hairline { border: none; border-top: 1px solid var(--hairline); }
+
+    /* ─── IMAGE PLACEHOLDERS ─────────────────────────────────── */
+    .img-block {
+      background: var(--img-tone);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: background .25s ease;
+    }
+    .img-block span {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .6rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--img-label);
+      user-select: none;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      transition: background .25s ease;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .wordmark {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: .06em;
+      color: var(--text);
+      transition: color .25s ease;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    .nav-link {
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      transition: color .2s ease;
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width .2s ease;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-link:hover::after { width: 100%; }
+
+    /* theme toggle */
+    #theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      transition: color .2s ease;
+      padding: 0;
+      line-height: 1;
+    }
+    #theme-toggle:hover { color: var(--accent); }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    .hero {
+      padding: clamp(5rem, 10vw, 9rem) 0 clamp(4rem, 8vw, 7rem);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 0;
+      align-items: end;
+    }
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+      padding-right: 3rem;
+      padding-bottom: 3.5rem;
+    }
+    .hero-eyebrow {
+      margin-bottom: 2rem;
+    }
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: .96;
+      letter-spacing: -.02em;
+      color: var(--text);
+      transition: color .25s ease;
+      margin-bottom: 2.5rem;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--accent);
+      transition: color .25s ease;
+    }
+    .hero-sub {
+      font-size: clamp(.9rem, 1.5vw, 1rem);
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-sub);
+      max-width: 28ch;
+      margin-bottom: 3rem;
+      transition: color .25s ease;
+    }
+    .cta-link {
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text);
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 3px;
+      transition: color .2s ease, border-color .2s ease;
+      display: inline-block;
+    }
+    .cta-link:hover { color: var(--accent); }
+
+    .hero-image {
+      grid-column: 2;
+      grid-row: 1 / 3;
+      height: clamp(420px, 65vh, 680px);
+      position: relative;
+      top: -2rem;
+    }
+    .hero-image .img-block {
+      width: 100%;
+      height: 100%;
+    }
+    .hero-scroll-note {
+      grid-column: 1;
+      grid-row: 2;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--hairline);
+    }
+
+    /* ─── ABOUT STRIP ────────────────────────────────────────── */
+    .about {
+      padding: clamp(5rem, 9vw, 8rem) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+    .about-text { padding-top: .5rem; }
+    .about-heading {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -.015em;
+      margin: 1.5rem 0 2rem;
+    }
+    .about-body {
+      font-size: clamp(.88rem, 1.3vw, .95rem);
+      line-height: 1.75;
+      color: var(--text-sub);
+      max-width: 46ch;
+      margin-bottom: 2.5rem;
+      transition: color .25s ease;
+    }
+    .pull-quote {
+      border-left: 1px solid var(--accent);
+      padding-left: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .pull-quote p {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--text);
+      transition: color .25s ease;
+    }
+    .about-image {
+      height: clamp(320px, 50vh, 560px);
+      position: relative;
+      top: 3rem;
+    }
+    .about-image .img-block {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ─── MENU PREVIEW ───────────────────────────────────────── */
+    .menu {
+      padding: clamp(5rem, 9vw, 8rem) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3.5rem;
+    }
+    .menu-heading {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: -.01em;
+    }
+    .menu-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 clamp(3rem, 7vw, 8rem);
+    }
+    .menu-category {
+      margin-bottom: 3rem;
+    }
+    .menu-category-label {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 0;
+    }
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .item-name {
+      font-family: 'Fraunces', serif;
+      font-size: .95rem;
+      font-weight: 400;
+      letter-spacing: .01em;
+      margin-bottom: .2rem;
+    }
+    .item-desc {
+      font-size: .75rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      transition: color .25s ease;
+    }
+    .item-price {
+      font-family: 'Fraunces', serif;
+      font-size: .88rem;
+      font-weight: 300;
+      color: var(--text-sub);
+      white-space: nowrap;
+      transition: color .25s ease;
+    }
+
+    /* ─── PHOTO STRIP ────────────────────────────────────────── */
+    .photo-strip {
+      padding: clamp(4rem, 7vw, 6rem) 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .photo-strip-inner {
+      display: grid;
+      grid-template-columns: 3fr 2fr 3fr;
+      grid-template-rows: auto auto;
+      gap: 1.2rem;
+      align-items: end;
+    }
+    .photo-a {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      height: clamp(280px, 45vh, 500px);
+    }
+    .photo-b {
+      grid-column: 2;
+      grid-row: 1;
+      height: clamp(180px, 28vh, 300px);
+      align-self: end;
+    }
+    .photo-c {
+      grid-column: 3;
+      grid-row: 1 / 3;
+      height: clamp(220px, 36vh, 400px);
+      margin-top: 3rem;
+    }
+    .photo-a .img-block,
+    .photo-b .img-block,
+    .photo-c .img-block {
+      width: 100%;
+      height: 100%;
+      transition: transform .4s ease;
+    }
+    .photo-a:hover .img-block,
+    .photo-b:hover .img-block,
+    .photo-c:hover .img-block {
+      transform: scale(1.015);
+    }
+
+    /* ─── FOOTER / VISIT ─────────────────────────────────────── */
+    footer {
+      padding: clamp(5rem, 9vw, 8rem) 0 clamp(3rem, 5vw, 4rem);
+      border-top: 1px solid var(--hairline);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      margin-bottom: clamp(4rem, 7vw, 6rem);
+    }
+    .footer-headline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+    }
+    .footer-headline em {
+      font-style: italic;
+      color: var(--accent);
+      transition: color .25s ease;
+    }
+    .footer-col-label {
+      margin-bottom: 1.2rem;
+    }
+    .footer-col p {
+      font-size: .82rem;
+      line-height: 1.9;
+      color: var(--text-sub);
+      transition: color .25s ease;
+    }
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin-top: 1rem;
+    }
+    .social-link {
+      font-size: .65rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      transition: color .2s ease;
+      position: relative;
+      display: inline-block;
+      width: fit-content;
+    }
+    .social-link::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -1px;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width .2s ease;
+    }
+    .social-link:hover { color: var(--text); }
+    .social-link:hover::after { width: 100%; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--hairline);
+    }
+    .footer-bottom p {
+      font-size: .65rem;
+      letter-spacing: .1em;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      transition: color .25s ease;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      .hero-copy {
+        grid-column: 1; grid-row: 2;
+        padding-right: 0;
+        padding-bottom: 0;
+        padding-top: 2.5rem;
+      }
+      .hero-image {
+        grid-column: 1; grid-row: 1;
+        top: 0;
+        height: clamp(260px, 55vw, 420px);
+      }
+      .hero-scroll-note {
+        grid-column: 1; grid-row: 3;
+        padding-top: 2rem;
+        margin-top: 2.5rem;
+      }
+      .about-inner {
+        grid-template-columns: 1fr;
+      }
+      .about-image {
+        top: 0;
+        order: -1;
+        height: clamp(240px, 60vw, 400px);
+      }
+      .menu-columns { grid-template-columns: 1fr; }
+      .photo-strip-inner {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      .photo-a { grid-column: 1 / 3; grid-row: 1; height: clamp(220px, 50vw, 360px); }
+      .photo-b { grid-column: 1; grid-row: 2; height: clamp(160px, 35vw, 260px); }
+      .photo-c { grid-column: 2; grid-row: 2; height: clamp(160px, 35vw, 260px); margin-top: 0; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top > .footer-col:first-child { grid-column: 1 / 3; }
+    }
+
+    @media (max-width: 600px) {
+      nav { gap: 1.5rem; }
+      .nav-link.hide-sm { display: none; }
+      .photo-strip-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .photo-a, .photo-b, .photo-c {
+        grid-column: 1; grid-row: auto;
+        height: clamp(200px, 60vw, 320px);
+        margin-top: 0;
+      }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-top > .footer-col:first-child { grid-column: 1; }
+      .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ──────────────────────────────────────────────── -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="wordmark">Deja Bru</a>
+        <nav>
+          <a href="#menu" class="nav-link hide-sm">Menu</a>
+          <a href="#about" class="nav-link hide-sm">About</a>
+          <a href="#visit" class="nav-link">Visit</a>
+          <button id="theme-toggle" aria-label="Toggle theme">Dark</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── HERO ────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+
+        <div class="hero-copy">
+          <p class="label hero-eyebrow">Specialty Coffee &mdash; Est. 2019</p>
+          <h1 class="hero-headline">
+            Coffee<br>
+            as it<br>
+            <em>should be.</em>
+          </h1>
+          <p class="hero-sub">Sourced with intention. Roasted with restraint. Served without compromise.</p>
+          <a href="#menu" class="cta-link">View the Menu</a>
+        </div>
+
+        <div class="hero-image">
+          <div class="img-block" style="height:100%;"><span>Hero Image</span></div>
+        </div>
+
+        <div class="hero-scroll-note">
+          <p class="label">Seasonal offerings &mdash; updated weekly</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" />
+
+  <!-- ── ABOUT ────────────────────────────────────────────────── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-text">
+          <p class="label">Our Philosophy</p>
+          <h2 class="about-heading">Less noise.<br>More cup.</h2>
+          <p class="about-body">
+            We believe the best coffee doesn't announce itself. It arrives quietly, does exactly what it promises, and leaves you wanting the next one. Deja Bru works directly with smallholder farms across Ethiopia, Colombia, and Guatemala — selecting lots that reward attention.
+          </p>
+
+          <div class="pull-quote">
+            <p>"Every roast is a decision about what to leave alone."</p>
+          </div>
+
+          <p class="about-body">
+            Our roastery operates a few blocks from the cafe. Beans move from green to bag in under 48 hours. We don't chase trends. We chase traceability.
+          </p>
+        </div>
+
+        <div class="about-image">
+          <div class="img-block" style="height:100%;"><span>Roastery</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MENU PREVIEW ─────────────────────────────────────────── -->
+  <section class="menu" id="menu">
+    <div class="container">
+
+      <div class="menu-header">
+        <h2 class="menu-heading">On the Bar</h2>
+        <p class="label">All prices in USD</p>
+      </div>
+
+      <div class="menu-columns">
+
+        <div>
+          <div class="menu-category">
+            <p class="label menu-category-label">Filter</p>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Pour Over</p>
+                <p class="item-desc">Single origin, rotating. Ask your barista about today's lot.</p>
+              </div>
+              <p class="item-price">7</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Cold Drip</p>
+                <p class="item-desc">12-hour slow extraction. Chocolate, clean finish.</p>
+              </div>
+              <p class="item-price">6</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Filter of the Week</p>
+                <p class="item-desc">Batch brew, refreshed daily. A reliable constant.</p>
+              </div>
+              <p class="item-price">4</p>
+            </div>
+          </div>
+
+          <div class="menu-category">
+            <p class="label menu-category-label">Espresso</p>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Straight Shot</p>
+                <p class="item-desc">Our house blend. Caramel, citrus peel, dry finish.</p>
+              </div>
+              <p class="item-price">3.5</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Cortado</p>
+                <p class="item-desc">Equal parts espresso and warm milk. Nothing else.</p>
+              </div>
+              <p class="item-price">5</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Flat White</p>
+                <p class="item-desc">Micro-foam, tight texture. Whole or oat milk.</p>
+              </div>
+              <p class="item-price">5.5</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="menu-category">
+            <p class="label menu-category-label">Milk Bar</p>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Cafe Latte</p>
+                <p class="item-desc">Standard-bearer. Steamed whole or plant milk of choice.</p>
+              </div>
+              <p class="item-price">6</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Bru Tonic</p>
+                <p class="item-desc">Espresso over sparkling water and ice. Dry, bright.</p>
+              </div>
+              <p class="item-price">6.5</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Seasonal Latte</p>
+                <p class="item-desc">Changes with the produce. Ask at the counter.</p>
+              </div>
+              <p class="item-price">7</p>
+            </div>
+          </div>
+
+          <div class="menu-category">
+            <p class="label menu-category-label">Non-Coffee</p>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">Ceremonial Matcha</p>
+                <p class="item-desc">Whisked to order. Oat milk or straight water.</p>
+              </div>
+              <p class="item-price">6</p>
+            </div>
+            <div class="menu-item">
+              <div>
+                <p class="item-name">House Soda</p>
+                <p class="item-desc">Rotating flavour. Citrus-forward, lightly sweetened.</p>
+              </div>
+              <p class="item-price">4</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PHOTO STRIP ───────────────────────────────────────────── -->
+  <section class="photo-strip">
+    <div class="container">
+      <div class="photo-strip-inner">
+        <div class="photo-a">
+          <div class="img-block" style="height:100%;"><span>Bar Detail</span></div>
+        </div>
+        <div class="photo-b">
+          <div class="img-block" style="height:100%;"><span>Pour Shot</span></div>
+        </div>
+        <div class="photo-c">
+          <div class="img-block" style="height:100%;"><span>Interior</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER / VISIT ────────────────────────────────────────── -->
+  <footer id="visit">
+    <div class="container">
+
+      <div class="footer-top">
+        <div class="footer-col">
+          <h2 class="footer-headline">
+            Find us<br>
+            <em>when you're ready.</em>
+          </h2>
+        </div>
+
+        <div class="footer-col">
+          <p class="label footer-col-label">Hours</p>
+          <p>
+            Mon &ndash; Fri&nbsp;&nbsp;7am &ndash; 6pm<br>
+            Saturday&nbsp;&nbsp;&nbsp;&nbsp;8am &ndash; 5pm<br>
+            Sunday&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closed
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <p class="label footer-col-label">Location</p>
+          <p>
+            14 Meridian Lane<br>
+            East Quarter<br>
+            Your City, 00100
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">Newsletter</a>
+            <a href="#" class="social-link">Wholesale</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Deja Bru. All rights reserved.</p>
+        <p>Specialty Coffee Roasters</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ── SCRIPT ────────────────────────────────────────────────── -->
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const btn  = document.getElementById('theme-toggle');
+
+      // Determine initial theme: session > system preference
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      let current = sessionStorage.getItem('db-theme') || getSystemTheme();
+      apply(current);
+
+      btn.addEventListener('click', function () {
+        current = current === 'dark' ? 'light' : 'dark';
+        sessionStorage.setItem('db-theme', current);
+        apply(current);
+      });
+
+      function apply(theme) {
+        root.setAttribute('data-theme', theme);
+        btn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+
+      // Listen for system preference change when no session override
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+        if (!sessionStorage.getItem('db-theme')) {
+          current = e.matches ? 'dark' : 'light';
+          apply(current);
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
