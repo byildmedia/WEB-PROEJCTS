@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Param Food Complex — Gwalior's beloved pure vegetarian restaurant. Street snacks, Gujarati farsan, sizzlers, South Indian, fresh bakery & drinks. Open every day, 8 AM – 11 PM.">
+  <title>🔥 Param Food Complex | Pure Veg Restaurant in Gwalior</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="🔥 Param Food Complex | Pure Veg Restaurant in Gwalior">
+  <meta property="og:description" content="Scrumptious & healthy vegetarian cuisine under one roof — snacks, farsan, sizzlers, South Indian, bakery & drinks. Moti Mahal Road, Padav, Gwalior.">
+  <meta property="og:type" content="restaurant.restaurant">
+  <meta property="og:url" content="https://www.paramfood.in/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1200&q=80&auto=format">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Param Food Complex",
+    "servesCuisine": ["Indian", "South Indian", "Vegetarian", "Bakery"],
+    "telephone": "+91-74007-37711",
+    "email": "info.paramfood@gmail.com",
+    "url": "https://www.paramfood.in/",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Moti Mahal Road, Padav",
+      "addressLocality": "Gwalior",
+      "addressRegion": "Madhya Pradesh",
+      "postalCode": "474002",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "08:00",
+      "closes": "23:00"
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS — vintage Indian bazaar
+    ───────────────────────────────────────── */
+    :root {
+      --cream:        #F5EFE2;
+      --cream-deep:   #EDE4D0;
+      --paper:        #FBF7EC;
+      --charcoal:     #241F1C;
+      --charcoal-soft:#4A423C;
+      --saffron:      #E8A020;
+      --saffron-deep: #C98812;
+      --chili:        #C6431F;
+      --chili-deep:   #A83618;
+      --turmeric:     #D9A441;
+      --wood:         #6B4A2F;
+      --green:        #3E5C3A;
+      --green-deep:   #2E4A2B;
+      --steel:        #B9BDB9;
+      --white:        #FFFFFF;
+
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body:    'Work Sans', -apple-system, sans-serif;
+
+      --shadow-warm:  0 10px 30px rgba(107, 74, 47, 0.18);
+      --shadow-soft:  0 4px 14px rgba(36, 31, 28, 0.10);
+      --radius:       10px;
+      --wrap:         1180px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.65;
+      /* subtle paper grain */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+    /* Vintage double-rule border helper */
+    .double-rule {
+      border: 1px solid var(--charcoal);
+      outline: 3px double var(--charcoal);
+      outline-offset: 4px;
+    }
+
+    ::selection { background: var(--saffron); color: var(--charcoal); }
+
+    /* ─────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: rgba(245, 239, 226, 0.97);
+      border-bottom: 1px solid rgba(36,31,28,0.15);
+      transition: box-shadow .3s ease;
+    }
+    header.scrolled { box-shadow: var(--shadow-soft); }
+
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; max-width: var(--wrap); margin: 0 auto;
+      transition: padding .3s ease;
+    }
+    header.scrolled .nav { padding: 10px 24px; }
+
+    .brand {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: 1.5rem; letter-spacing: 0.5px;
+      text-decoration: none; line-height: 1.1;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .brand-mark {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--green);
+      color: var(--cream); display: grid; place-items: center;
+      font-size: 1.1rem; border: 2px solid var(--charcoal);
+      box-shadow: 2px 2px 0 var(--charcoal);
+      transition: transform .25s ease;
+    }
+    .brand:hover .brand-mark { transform: rotate(-8deg); }
+    .brand small {
+      display: block; font-family: var(--font-body); font-weight: 600;
+      font-size: 0.62rem; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--chili);
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; font-weight: 500; font-size: 0.92rem;
+      letter-spacing: 0.5px; position: relative; padding: 4px 0;
+    }
+    .nav-links a:not(.btn)::after {
+      content: ""; position: absolute; left: 0; bottom: -2px;
+      width: 100%; height: 2px; background: var(--chili);
+      transform: scaleX(0); transform-origin: right; transition: transform .28s ease;
+    }
+    .nav-links a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .burger {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 6px;
+    }
+    .burger span { width: 26px; height: 2.5px; background: var(--charcoal); transition: .3s; }
+    .burger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; }
+    .burger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+    /* ─────────────────────────────────────────
+       BUTTONS — stamped / pressed effect
+    ───────────────────────────────────────── */
+    .btn {
+      display: inline-block; text-decoration: none; cursor: pointer;
+      font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      padding: 14px 28px; border-radius: 6px;
+      border: 2px solid var(--charcoal);
+      box-shadow: 3px 3px 0 var(--charcoal);
+      transition: transform .15s ease, box-shadow .15s ease;
+      background: var(--paper); color: var(--charcoal);
+    }
+    .btn:hover  { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--charcoal); }
+    .btn:active { transform: translate(2px, 2px);  box-shadow: 1px 1px 0 var(--charcoal); }
+    .btn-primary { background: var(--saffron); }
+    .btn-green   { background: var(--green); color: var(--cream); }
+    .btn-sm { padding: 9px 18px; font-size: 0.8rem; }
+
+    /* ─────────────────────────────────────────
+       STAMP BADGES
+    ───────────────────────────────────────── */
+    .stamp {
+      display: inline-block; font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 1.4px; text-transform: uppercase;
+      border: 1.5px dashed currentColor; border-radius: 4px;
+      padding: 3px 9px; transform: rotate(-2deg);
+    }
+    .stamp-green  { color: var(--green); }
+    .stamp-chili  { color: var(--chili); }
+    .stamp-wood   { color: var(--wood); }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 140px 0 80px;
+      background:
+        linear-gradient(rgba(36,31,28,0.55), rgba(36,31,28,0.72)),
+        linear-gradient(135deg, var(--wood), var(--charcoal)),
+        url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1920&q=80&auto=format') center/cover no-repeat;
+      background-blend-mode: normal, multiply, normal;
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin: 0 auto 28px;
+      border: 1.5px dashed var(--saffron); color: var(--saffron);
+      border-radius: 999px; padding: 7px 20px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+    .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); outline: 2px solid var(--cream); }
+
+    .hero h1 {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      line-height: 1.02; letter-spacing: -1px;
+      max-width: 900px; margin: 0 auto 10px;
+    }
+    .hero h1 .accent {
+      font-style: italic; font-weight: 500; color: var(--saffron);
+      display: block; font-size: 0.52em; letter-spacing: 1px; margin-top: 12px;
+    }
+    .hero p.lede {
+      max-width: 620px; margin: 22px auto 40px;
+      font-size: 1.08rem; font-weight: 300; color: rgba(245,239,226,0.9);
+    }
+    .hero-ctas { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+    .hero .btn { box-shadow: 3px 3px 0 rgba(0,0,0,0.55); border-color: var(--cream); }
+    .hero .btn-ghost { background: transparent; color: var(--cream); }
+
+    .hero-hours {
+      margin-top: 46px; font-size: 0.85rem; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(245,239,226,0.75);
+    }
+    .hero-hours strong { color: var(--saffron); }
+
+    /* ─────────────────────────────────────────
+       TICKER — bazaar marquee strip
+    ───────────────────────────────────────── */
+    .ticker {
+      background: var(--chili); color: var(--cream);
+      border-top: 2px solid var(--charcoal); border-bottom: 2px solid var(--charcoal);
+      overflow: hidden; white-space: nowrap; padding: 12px 0;
+    }
+    .ticker-track {
+      display: inline-block; animation: ticker 28s linear infinite;
+      font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; font-size: 0.82rem;
+    }
+    .ticker-track span { margin: 0 26px; }
+    .ticker-track .sep { color: var(--saffron); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ─────────────────────────────────────────
+       SECTION SCAFFOLDING
+    ───────────────────────────────────────── */
+    section { padding: 96px 0; }
+    .kicker {
+      font-size: 0.74rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--chili);
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .kicker::before { content: ""; width: 34px; height: 1.5px; background: var(--chili); }
+    .section-title {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.1;
+      letter-spacing: -0.5px; margin-bottom: 18px;
+    }
+    .section-title em { font-style: italic; font-weight: 500; color: var(--wood); }
+
+    /* hand-drawn wavy divider between name & price */
+    .divider-hand {
+      height: 14px; margin: 0 auto; width: 160px; opacity: 0.7;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='14' viewBox='0 0 160 14'%3E%3Cpath d='M2 8 Q 12 2, 22 8 T 42 8 T 62 8 T 82 8 T 102 8 T 122 8 T 142 8 T 162 8' stroke='%23C6431F' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;
+    }
+
+    /* ─────────────────────────────────────────
+       STORY
+    ───────────────────────────────────────── */
+    .story-grid {
+      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 64px; align-items: center;
+    }
+    .story-copy p { margin-bottom: 18px; color: var(--charcoal-soft); }
+    .story-copy p strong { color: var(--charcoal); }
+
+    .story-stamps { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+
+    /* vintage postcard framing */
+    .postcard {
+      position: relative; background: var(--paper);
+      padding: 16px 16px 58px; border: 1px solid rgba(36,31,28,0.25);
+      box-shadow: var(--shadow-warm);
+      transform: rotate(1.6deg); transition: transform .35s ease;
+    }
+    .postcard:hover { transform: rotate(0deg) scale(1.01); }
+    .postcard img, .postcard .ph {
+      width: 100%; height: 440px; object-fit: cover;
+      background: linear-gradient(135deg, var(--turmeric), var(--wood));
+      filter: sepia(0.22) saturate(0.92) contrast(1.02);
+      transition: filter .35s ease;
+    }
+    .postcard:hover img { filter: sepia(0.05) saturate(1.1); }
+    .postcard figcaption {
+      position: absolute; bottom: 16px; left: 16px; right: 16px;
+      font-family: var(--font-display); font-style: italic;
+      font-size: 0.95rem; color: var(--wood); text-align: center;
+    }
+    .postcard .stamp-corner {
+      position: absolute; top: 26px; right: 26px;
+      border: 1.5px dashed var(--chili); color: var(--chili);
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 8px 10px; transform: rotate(6deg); background: rgba(251,247,236,0.88);
+      border-radius: 3px;
+    }
+
+    /* ─────────────────────────────────────────
+       MENU
+    ───────────────────────────────────────── */
+    .menu-section { background: var(--cream-deep); border-top: 2px solid var(--charcoal); border-bottom: 2px solid var(--charcoal); }
+
+    .menu-head { text-align: center; max-width: 640px; margin: 0 auto 20px; }
+    .menu-head .kicker { justify-content: center; }
+    .menu-head .kicker::after { content: ""; width: 34px; height: 1.5px; background: var(--chili); }
+    .menu-note {
+      font-size: 0.9rem; color: var(--wood); font-style: italic; margin-top: 10px;
+    }
+
+    .menu-tabs {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      margin: 40px 0 50px;
+    }
+    .menu-tab {
+      font-family: var(--font-body); font-weight: 600; font-size: 0.82rem;
+      letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer;
+      background: var(--paper); color: var(--charcoal);
+      border: 1.5px solid var(--charcoal); border-radius: 999px;
+      padding: 10px 22px; transition: all .2s ease;
+    }
+    .menu-tab:hover { background: var(--turmeric); }
+    .menu-tab.active {
+      background: var(--green); color: var(--cream);
+      box-shadow: 2px 2px 0 var(--charcoal);
+    }
+
+    .menu-panel { display: none; animation: fadeUp .45s ease; }
+    .menu-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 44px; max-width: 980px; margin: 0 auto; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+    .menu-item {
+      display: flex; align-items: flex-start; gap: 14px; padding: 14px 6px;
+      border-bottom: 1px dotted rgba(107,74,47,0.5);
+    }
+    .menu-item-body { flex: 1; }
+    .menu-item-top { display: flex; align-items: baseline; gap: 10px; }
+    .menu-item h4 {
+      font-family: var(--font-display); font-weight: 600; font-size: 1.12rem;
+      letter-spacing: 0.2px;
+    }
+    .menu-item .leader {
+      flex: 1; border-bottom: 2px dotted rgba(36,31,28,0.35);
+      transform: translateY(-5px); min-width: 20px;
+    }
+    .menu-item p { font-size: 0.87rem; color: var(--charcoal-soft); margin-top: 3px; }
+
+    /* ticket-style price tag */
+    .price-tag {
+      position: relative; flex-shrink: 0;
+      font-family: var(--font-display); font-weight: 700; font-size: 0.98rem;
+      background: var(--paper); color: var(--chili-deep);
+      border: 1.5px solid var(--charcoal); border-radius: 4px;
+      padding: 4px 12px 4px 18px;
+      box-shadow: 2px 2px 0 rgba(36,31,28,0.5);
+      transition: transform .2s ease;
+    }
+    .price-tag::before {
+      content: ""; position: absolute; left: 5px; top: 50%;
+      width: 6px; height: 6px; margin-top: -3px; border-radius: 50%;
+      background: var(--cream-deep); border: 1px solid var(--charcoal);
+    }
+    .menu-item:hover .price-tag { transform: rotate(-4deg) scale(1.06); }
+
+    .diet-badges { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
+    .diet {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      border: 1px dashed currentColor; border-radius: 3px; padding: 2px 7px;
+    }
+    .diet-veg   { color: var(--green); }
+    .diet-vegan { color: var(--green-deep); }
+    .diet-jain  { color: var(--wood); }
+    .diet-spicy { color: var(--chili); }
+
+    .menu-footnote {
+      text-align: center; margin-top: 46px; font-size: 0.88rem; color: var(--wood);
+    }
+    .menu-footnote .stamp { margin: 0 6px; transform: rotate(1.5deg); }
+
+    /* ─────────────────────────────────────────
+       GALLERY — the place
+    ───────────────────────────────────────── */
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 50px;
+    }
+    .g-card {
+      position: relative; overflow: hidden; border-radius: var(--radius);
+      border: 1.5px solid var(--charcoal); box-shadow: 3px 3px 0 var(--charcoal);
+      background: var(--wood);
+      aspect-ratio: 4 / 3;
+    }
+    .g-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: saturate(0.85) sepia(0.12); transition: filter .4s ease, transform .4s ease;
+    }
+    .g-card:hover img { filter: saturate(1.15) sepia(0); transform: scale(1.045); }
+    .g-card figcaption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 30px 16px 12px;
+      background: linear-gradient(transparent, rgba(36,31,28,0.85));
+      color: var(--cream); font-size: 0.82rem; letter-spacing: 0.4px;
+      font-family: var(--font-display); font-style: italic;
+    }
+    .g-card.tall { grid-row: span 2; aspect-ratio: auto; }
+
+    /* ─────────────────────────────────────────
+       REVIEWS
+    ───────────────────────────────────────── */
+    .reviews-section { background: var(--green); color: var(--cream); border-top: 2px solid var(--charcoal); border-bottom: 2px solid var(--charcoal); }
+    .reviews-section .kicker { color: var(--turmeric); }
+    .reviews-section .kicker::before { background: var(--turmeric); }
+
+    .rating-badge {
+      display: inline-flex; align-items: center; gap: 16px;
+      background: var(--paper); color: var(--charcoal);
+      border: 2px solid var(--charcoal); border-radius: var(--radius);
+      box-shadow: 4px 4px 0 var(--charcoal);
+      padding: 18px 28px; margin: 26px 0 50px;
+      transform: rotate(-1deg);
+    }
+    .rating-badge .score { font-family: var(--font-display); font-weight: 900; font-size: 2.4rem; line-height: 1; }
+    .rating-badge .stars { color: var(--saffron); font-size: 1.05rem; letter-spacing: 2px; }
+    .rating-badge small { display: block; font-size: 0.78rem; color: var(--charcoal-soft); margin-top: 3px; }
+
+    .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .quote {
+      background: rgba(245,239,226,0.08);
+      border: 1.5px dashed rgba(245,239,226,0.5); border-radius: var(--radius);
+      padding: 28px 26px;
+      transition: background .25s ease, transform .25s ease;
+    }
+    .quote:hover { background: rgba(245,239,226,0.14); transform: translateY(-4px); }
+    .quote p {
+      font-family: var(--font-display); font-style: italic; font-weight: 500;
+      font-size: 1.05rem; line-height: 1.55; margin-bottom: 18px;
+    }
+    .quote cite {
+      font-style: normal; font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1.8px; text-transform: uppercase; color: var(--turmeric);
+    }
+
+    /* ─────────────────────────────────────────
+       VISIT / PRACTICAL INFO
+    ───────────────────────────────────────── */
+    .visit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 46px; }
+
+    .info-card {
+      background: var(--paper); border: 1.5px solid var(--charcoal);
+      border-radius: var(--radius); box-shadow: 4px 4px 0 var(--charcoal);
+      padding: 34px;
+    }
+    .info-card h3 {
+      font-family: var(--font-display); font-weight: 700; font-size: 1.3rem;
+      margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+    }
+    .info-card h3 .pin { font-size: 1rem; }
+    .info-card + .info-card { margin-top: 26px; }
+    .info-card p { color: var(--charcoal-soft); font-size: 0.95rem; }
+    .info-card .addr { margin: 8px 0 14px; }
+    .info-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 18px; }
+    .hours-table td {
+      padding: 12px 4px; font-size: 0.94rem;
+      border-bottom: 1px dotted rgba(107,74,47,0.5);
+    }
+    .hours-table td:last-child { text-align: right; font-weight: 600; }
+    .hours-table tr.today td { color: var(--chili-deep); font-weight: 700; }
+    .open-now {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 18px;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--green);
+    }
+    .open-now .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(62,92,58,0.5); } 50% { box-shadow: 0 0 0 7px rgba(62,92,58,0); } }
+
+    .map-ph {
+      margin-top: 26px; height: 230px; border-radius: var(--radius);
+      border: 1.5px dashed var(--wood);
+      display: grid; place-items: center; text-align: center;
+      color: var(--wood); background: repeating-linear-gradient(
+        45deg, transparent, transparent 12px, rgba(107,74,47,0.05) 12px, rgba(107,74,47,0.05) 24px);
+      text-decoration: none; transition: background-color .25s ease;
+    }
+    .map-ph:hover { background-color: rgba(217,164,65,0.12); }
+    .map-ph strong { font-family: var(--font-display); font-size: 1.05rem; display: block; }
+    .map-ph span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    footer {
+      background: var(--charcoal); color: rgba(245,239,226,0.8);
+      padding: 70px 0 30px; border-top: 4px double var(--saffron);
+    }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 50px; }
+    .footer-brand { font-family: var(--font-display); font-weight: 900; font-size: 1.6rem; color: var(--cream); }
+    .footer-brand small { display: block; font-family: var(--font-body); font-weight: 600; font-size: 0.62rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--saffron); margin-top: 4px; }
+    footer p { font-size: 0.9rem; margin-top: 14px; max-width: 320px; }
+    footer h4 {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--turmeric); margin-bottom: 18px;
+    }
+    footer ul { list-style: none; }
+    footer li { margin-bottom: 10px; }
+    footer a { text-decoration: none; font-size: 0.92rem; transition: color .2s; }
+    footer a:hover { color: var(--saffron); }
+    .footer-bottom {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px dashed rgba(245,239,226,0.25);
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+      font-size: 0.8rem; color: rgba(245,239,226,0.55);
+    }
+
+    /* ─────────────────────────────────────────
+       SCROLL REVEAL
+    ───────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 920px) {
+      .story-grid, .visit-grid { grid-template-columns: 1fr; gap: 44px; }
+      .menu-panel.active { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .quotes { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .postcard img, .postcard .ph { height: 340px; }
+    }
+    @media (max-width: 680px) {
+      section { padding: 70px 0; }
+      .nav-links {
+        position: fixed; left: 0; right: 0; top: 64px; height: calc(100vh - 64px);
+        overflow-y: auto;
+        background: var(--cream); flex-direction: column; justify-content: flex-start;
+        padding-top: 50px; gap: 26px; font-size: 1.15rem;
+        transform: translateX(100%); transition: transform .32s ease;
+      }
+      .nav-links.open { transform: translateX(0); }
+      .burger { display: flex; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-ctas .btn { width: 100%; max-width: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ───────────── HEADER ───────────── -->
+  <header id="header">
+    <nav class="nav">
+      <a href="#top" class="brand">
+        <span class="brand-mark">🌿</span>
+        <span>Param<small>Food Complex · Gwalior</small></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#menu">The Menu</a></li>
+        <li><a href="#gallery">The Place</a></li>
+        <li><a href="#visit">Visit Us</a></li>
+        <li><a href="#order" class="btn btn-primary btn-sm">Order Online</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ───────────── HERO ───────────── -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-badge"><span class="dot"></span> 100% Pure Vegetarian · Since Day One</div>
+      <h1>
+        Scrumptious &amp; healthy,<br>the bazaar way.
+        <span class="accent">— vegetarian cuisine under one roof, Gwalior —</span>
+      </h1>
+      <p class="lede">
+        From crispy street pakoras and soft Gujarati dhokla to creamy spaghetti,
+        sizzlers, South Indian classics and a bakery counter full of temptation —
+        everything fresh, everything veg, every single day.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#order">Order Online</a>
+        <a class="btn btn-ghost" href="#menu">See the Menu</a>
+        <a class="btn btn-ghost" href="tel:+917400737711">☎ Call Us</a>
+      </div>
+      <p class="hero-hours">Open every day · <strong>8:00 AM – 11:00 PM</strong> · non-stop service</p>
+    </div>
+  </section>
+
+  <!-- ───────────── TICKER ───────────── -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Pure Veg</span><span class="sep">✦</span>
+      <span>Fresh Every Day</span><span class="sep">✦</span>
+      <span>Snacks · Farsan · Sizzlers</span><span class="sep">✦</span>
+      <span>South Indian</span><span class="sep">✦</span>
+      <span>Bakery &amp; Desserts</span><span class="sep">✦</span>
+      <span>Moti Mahal Road, Padav</span><span class="sep">✦</span>
+      <span>Pure Veg</span><span class="sep">✦</span>
+      <span>Fresh Every Day</span><span class="sep">✦</span>
+      <span>Snacks · Farsan · Sizzlers</span><span class="sep">✦</span>
+      <span>South Indian</span><span class="sep">✦</span>
+      <span>Bakery &amp; Desserts</span><span class="sep">✦</span>
+      <span>Moti Mahal Road, Padav</span><span class="sep">✦</span>
+    </div>
+  </div>
+
+  <!-- ───────────── STORY ───────────── -->
+  <section id="story">
+    <div class="wrap story-grid">
+      <div class="story-copy reveal">
+        <div class="kicker">Our Story</div>
+        <h2 class="section-title">A dream of <em>everything vegetarian,</em> under one roof</h2>
+        <p>
+          The founders of Param Food Complex are <strong>vegan by choice</strong> — and they
+          always dreamt of a place where vegetarian food isn't the side of the menu,
+          but the whole menu. Not one cuisine, but many: the chaat corner, the farsan
+          counter, the sizzler plate, the dosa griddle and the bakery case, all
+          living together like stalls in one busy, happy bazaar.
+        </p>
+        <p>
+          That dream became a Gwalior institution on <strong>Moti Mahal Road, Padav</strong> —
+          a family place where breakfast idlis roll into lunchtime thalis, evening
+          pakoras and late-night sizzlers, without the kitchen ever taking a break.
+        </p>
+        <p>
+          Everything is made in-house with fresh, earth-friendly ingredients:
+          healthy sandwiches, creamy spaghetti, wholesome soups and salads, and a
+          huge family of desserts and drinks.
+        </p>
+        <div class="story-stamps">
+          <span class="stamp stamp-green">100% Vegetarian</span>
+          <span class="stamp stamp-chili">Made Fresh Daily</span>
+          <span class="stamp stamp-wood">Family Restaurant</span>
+        </div>
+      </div>
+      <figure class="postcard reveal">
+        <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=900&q=80&auto=format" alt="A colourful Indian market stall stacked with fresh produce and spices" loading="lazy">
+        <span class="stamp-corner">Gwalior · M.P.</span>
+        <figcaption>Greetings from the bazaar — where every counter tells a story.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ───────────── MENU ───────────── -->
+  <section class="menu-section" id="menu">
+    <div class="wrap">
+      <div class="menu-head reveal">
+        <div class="kicker">The Menu</div>
+        <h2 class="section-title">One roof, <em>seven cravings</em></h2>
+        <div class="divider-hand"></div>
+        <p class="menu-note">Everything is made in-house. Our breads and bakery are baked fresh every day.</p>
+      </div>
+
+      <div class="menu-tabs reveal" role="tablist" aria-label="Menu categories">
+        <button class="menu-tab active" role="tab" aria-selected="true"  data-panel="snacks">Street Snacks</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-panel="farsan">Farsan &amp; South Indian</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-panel="mains">Sizzlers &amp; Mains</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-panel="bakery">Bakery &amp; Desserts</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-panel="drinks">Drinks</button>
+      </div>
+
+      <!-- Street Snacks -->
+      <div class="menu-panel active" id="panel-snacks" role="tabpanel">
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Paneer Pakoda</h4><span class="leader"></span></div>
+            <p>Soft paneer in a crisp, spiced gram-flour coat — the evening classic.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-spicy">Spicy</span></div>
+          </div>
+          <span class="price-tag">₹120</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Mix Pakora Basket</h4><span class="leader"></span></div>
+            <p>Onion, potato, chilli &amp; spinach fritters with our green chutney.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹100</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Veg Spring Roll</h4><span class="leader"></span></div>
+            <p>Crackly rolls stuffed with glass noodles and garden vegetables.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹110</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Masala French Fries</h4><span class="leader"></span></div>
+            <p>Golden fries dusted with our house chaat masala.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹90</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Healthy Grilled Sandwich</h4><span class="leader"></span></div>
+            <p>Multigrain bread, crunchy vegetables, mint mayo — toasted till golden.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹130</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Sweet Corn Soup</h4><span class="leader"></span></div>
+            <p>Comfort in a bowl — creamy corn with a pepper kick.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-jain">Jain option</span></div>
+          </div>
+          <span class="price-tag">₹95</span>
+        </div>
+      </div>
+
+      <!-- Farsan & South Indian -->
+      <div class="menu-panel" id="panel-farsan" role="tabpanel">
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Khandvi</h4><span class="leader"></span></div>
+            <p>Silky gram-flour rolls tempered with mustard seeds &amp; curry leaves.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹80</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Dhokla</h4><span class="leader"></span></div>
+            <p>Steamed, spongy and light — Gujarat's gift to breakfast tables.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-jain">Jain option</span></div>
+          </div>
+          <span class="price-tag">₹70</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Masala Dosa</h4><span class="leader"></span></div>
+            <p>Crisp rice crêpe, spiced potato filling, sambar &amp; coconut chutney.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹110</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Idli Sambar</h4><span class="leader"></span></div>
+            <p>Pillow-soft steamed idlis in hot, tangy sambar.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹70</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Onion Uttapam</h4><span class="leader"></span></div>
+            <p>Thick griddle pancake loaded with onion, chilli and coriander.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹120</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Garden Fresh Salad</h4><span class="leader"></span></div>
+            <p>Seasonal vegetables, sprouts and a lemon-herb dressing.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span><span class="diet diet-jain">Jain option</span></div>
+          </div>
+          <span class="price-tag">₹85</span>
+        </div>
+      </div>
+
+      <!-- Sizzlers & Mains -->
+      <div class="menu-panel" id="panel-mains" role="tabpanel">
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Chilli Paneer Sizzler</h4><span class="leader"></span></div>
+            <p>Our showstopper — smoking hot plate, glazed paneer, rice &amp; sautéed veg.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-spicy">Spicy</span></div>
+          </div>
+          <span class="price-tag">₹260</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Veg Biryani</h4><span class="leader"></span></div>
+            <p>Fragrant basmati layered with vegetables and whole spices, with raita.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹180</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Creamy Spaghetti</h4><span class="leader"></span></div>
+            <p>The house favourite — silky white-sauce spaghetti with garlic bread.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹190</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Paneer Butter Masala</h4><span class="leader"></span></div>
+            <p>Rich tomato-butter gravy, soft paneer, best mopped up with naan.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹210</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Butter Naan / Tandoori Roti</h4><span class="leader"></span></div>
+            <p>Baked to order, brushed generously — fresh from the tandoor.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹40</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Veg Manchow Soup</h4><span class="leader"></span></div>
+            <p>Hot, dark and crunchy-topped with fried noodles.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-spicy">Spicy</span></div>
+          </div>
+          <span class="price-tag">₹95</span>
+        </div>
+      </div>
+
+      <!-- Bakery & Desserts -->
+      <div class="menu-panel" id="panel-bakery" role="tabpanel">
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Strawberry Slice Cake</h4><span class="leader"></span></div>
+            <p>The bakery-counter star — light sponge, real strawberry cream.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹90</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Chocolate Truffle Pastry</h4><span class="leader"></span></div>
+            <p>Dense, glossy and unapologetically chocolatey.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹85</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Gulab Jamun (2 pc)</h4><span class="leader"></span></div>
+            <p>Warm, syrup-soaked and made in our own kitchen.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹60</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>House Ice Creams</h4><span class="leader"></span></div>
+            <p>Rotating scoops — ask the counter what's churning today.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹70</span>
+        </div>
+      </div>
+
+      <!-- Drinks -->
+      <div class="menu-panel" id="panel-drinks" role="tabpanel">
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Masala Chai</h4><span class="leader"></span></div>
+            <p>Brewed strong with ginger and cardamom, served bazaar-style.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹40</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Sweet Lassi</h4><span class="leader"></span></div>
+            <p>Thick, chilled and hand-whisked — summer's best friend.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹70</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Cold Coffee</h4><span class="leader"></span></div>
+            <p>Frothy, ice-blended, topped with a whisper of cocoa.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span></div>
+          </div>
+          <span class="price-tag">₹90</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-body">
+            <div class="menu-item-top"><h4>Fresh Lime Soda</h4><span class="leader"></span></div>
+            <p>Sweet, salted or masala — squeezed to order.</p>
+            <div class="diet-badges"><span class="diet diet-veg">Veg</span><span class="diet diet-vegan">Vegan</span></div>
+          </div>
+          <span class="price-tag">₹60</span>
+        </div>
+      </div>
+
+      <p class="menu-footnote reveal">
+        <span class="stamp stamp-green">Veg</span>
+        <span class="stamp stamp-chili">Vegan options</span>
+        <span class="stamp stamp-wood">Jain on request</span><br><br>
+        Prices are indicative — see the counter board or our ordering page for today's card.
+      </p>
+    </div>
+  </section>
+
+  <!-- ───────────── GALLERY ───────────── -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">The Place</div>
+        <h2 class="section-title">Part canteen, <em>part bazaar</em></h2>
+        <p style="max-width:560px; color:var(--charcoal-soft);">
+          Warm lights, busy counters and the smell of fresh baking — a family
+          food complex where every corner serves something different.
+        </p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="g-card reveal tall">
+          <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=800&q=80&auto=format" alt="Vividly coloured spice powders in metal trays" loading="lazy">
+          <figcaption>Spice trays, stacked like the old market stalls.</figcaption>
+        </figure>
+        <figure class="g-card reveal">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80&auto=format" alt="Crisp samosas with tamarind and mint chutneys" loading="lazy">
+          <figcaption>The snack counter — crisp, hot, always moving.</figcaption>
+        </figure>
+        <figure class="g-card reveal">
+          <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=800&q=80&auto=format" alt="Fragrant vegetable biryani in a serving bowl" loading="lazy">
+          <figcaption>Biryani, layered and slow — worth the queue.</figcaption>
+        </figure>
+        <figure class="g-card reveal">
+          <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&q=80&auto=format" alt="Steaming chai being poured into a glass" loading="lazy">
+          <figcaption>Chai o'clock is every hour between 8 and 11.</figcaption>
+        </figure>
+        <figure class="g-card reveal">
+          <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80&auto=format" alt="A rich Indian curry garnished with fresh herbs" loading="lazy">
+          <figcaption>House gravies, simmered the unhurried way.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── REVIEWS ───────────── -->
+  <section class="reviews-section" id="reviews">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">Word on the Street</div>
+        <h2 class="section-title" style="color:var(--cream);">Gwalior keeps <em style="color:var(--turmeric);">coming back</em></h2>
+        <!-- TODO: update score & count with live Google numbers -->
+        <div class="rating-badge">
+          <span class="score">4.4</span>
+          <span>
+            <span class="stars">★★★★½</span>
+            <small>Google · Zomato · Tripadvisor — thousands of happy diners</small>
+          </span>
+        </div>
+      </div>
+      <div class="quotes">
+        <!-- Placeholder quotes — replace with real reviews before launch -->
+        <blockquote class="quote reveal">
+          <p>"The one place in Gwalior where the whole family agrees — dosa for dad, sizzler for the kids, cake for everyone."</p>
+          <cite>— Google review</cite>
+        </blockquote>
+        <blockquote class="quote reveal">
+          <p>"Pure veg done properly. The dhokla and khandvi taste like a Gujarati grandmother is hiding in the kitchen."</p>
+          <cite>— Zomato diner</cite>
+        </blockquote>
+        <blockquote class="quote reveal">
+          <p>"Open morning to night, always fresh, always busy. A Padav landmark for a reason."</p>
+          <cite>— Tripadvisor</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── VISIT ───────────── -->
+  <section id="visit">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="kicker">Visit Us</div>
+        <h2 class="section-title">Come hungry, <em>leave happy</em></h2>
+      </div>
+      <div class="visit-grid">
+        <div class="reveal">
+          <div class="info-card">
+            <h3><span class="pin">📍</span> Padav — the original</h3>
+            <p class="addr">Moti Mahal Road, Padav,<br>Gwalior, Madhya Pradesh 474002</p>
+            <div class="info-links">
+              <a class="btn btn-sm" href="tel:+917400737711">☎ 74007 37711</a>
+              <a class="btn btn-sm" href="tel:+917400737722">☎ 74007 37722</a>
+            </div>
+          </div>
+          <div class="info-card">
+            <h3><span class="pin">📍</span> City Center</h3>
+            <p class="addr">Millennium Plaza, City Center,<br>Gwalior, Madhya Pradesh</p>
+            <p>Same kitchen philosophy, second address — for the other side of town.</p>
+          </div>
+          <div class="info-card" id="order">
+            <h3><span class="pin">🛵</span> Order &amp; groups</h3>
+            <p>Order online for pickup or delivery, and write to us for parties
+            and group bookings.</p>
+            <div class="info-links">
+              <a class="btn btn-primary btn-sm" href="https://www.paramfood.in/" target="_blank" rel="noopener">Order Online</a>
+              <a class="btn btn-sm" href="mailto:info.paramfood@gmail.com">✉ info.paramfood@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="info-card">
+            <h3><span class="pin">🕗</span> Opening hours</h3>
+            <table class="hours-table">
+              <tr><td>Monday – Friday</td><td>8:00 AM – 11:00 PM</td></tr>
+              <tr><td>Saturday</td><td>8:00 AM – 11:00 PM</td></tr>
+              <tr><td>Sunday</td><td>8:00 AM – 11:00 PM</td></tr>
+            </table>
+            <span class="open-now"><span class="dot"></span> Non-stop service, 7 days a week</span>
+          </div>
+          <a class="map-ph" href="https://maps.google.com/?q=Param+Food+Complex+Moti+Mahal+Road+Padav+Gwalior" target="_blank" rel="noopener" style="display:grid;">
+            <span>
+              <strong>Find us on the map ↗</strong>
+              <span>Moti Mahal Road · Padav · Gwalior</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────────── FOOTER ───────────── -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand">Param<small>Food Complex · Gwalior</small></div>
+          <p>Scrumptious, healthy and earth-friendly vegetarian food —
+          the whole bazaar of flavours under one roof, since day one.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#menu">The Menu</a></li>
+            <li><a href="#gallery">The Place</a></li>
+            <li><a href="#visit">Visit Us</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Reach Us</h4>
+          <ul>
+            <li><a href="tel:+917400737711">+91 74007 37711</a></li>
+            <li><a href="mailto:info.paramfood@gmail.com">info.paramfood@gmail.com</a></li>
+            <li><a href="https://www.facebook.com/paramfoodgwalior/" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.paramfood.in/" target="_blank" rel="noopener">Order Online ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Param Food Complex, Gwalior. All rights reserved.</span>
+        <span>Made with ❤️ and a lot of spices.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Sticky header condense ──
+    const header = document.getElementById('header');
+    addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', scrollY > 40);
+    }, { passive: true });
+
+    // ── Mobile burger ──
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+    burger.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      burger.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }));
+
+    // ── Menu tabs (no reload) ──
+    document.querySelectorAll('.menu-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.menu-tab').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    // ── Scroll reveal (respects reduced motion) ──
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // ── Footer year ──
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
