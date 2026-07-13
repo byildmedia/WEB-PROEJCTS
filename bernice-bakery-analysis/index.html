@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BakeKit — Bernice-style Scroll Animation Kit</title>
+<style>
+  /* ============================================================
+     BakeKit demo page
+     Recreates the scroll-animation patterns of a playful bakery
+     e-commerce site (à la bernicebakery.com) with placeholder
+     content. Zero dependencies.
+     ============================================================ */
+  :root {
+    --cream: #fdf3e3;
+    --cream-dark: #f6e6cb;
+    --red: #e8402a;
+    --brown: #3f2a1d;
+    --pink: #f7c8c0;
+    --butter: #ffd98e;
+    --radius: 28px;
+    --display: "Cooper Black", "Chunk", Georgia, "Times New Roman", serif;
+    --sans: "Avenir Next", "Nunito", -apple-system, Segoe UI, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--brown);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+  h1, h2, h3 { font-family: var(--display); font-weight: 900; line-height: 1.05; }
+  section { position: relative; padding: 12vh 6vw; }
+  .tag {
+    display: inline-block; background: var(--brown); color: var(--cream);
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;
+  }
+
+  /* ---------- hero ---------- */
+  .hero { min-height: 100svh; display: flex; flex-direction: column;
+          justify-content: center; align-items: center; text-align: center; }
+  .hero h1 { font-size: clamp(3rem, 11vw, 9rem); color: var(--red); }
+  .hero h1 .ltr { display: inline-block; }
+  .hero p { margin-top: 18px; font-size: clamp(1rem, 2vw, 1.3rem); max-width: 34ch; }
+  .sticker {
+    position: absolute; font-size: clamp(2.5rem, 6vw, 5rem);
+    filter: drop-shadow(0 6px 0 rgba(63,42,29,.15)); user-select: none;
+  }
+
+  /* ---------- squishy button ---------- */
+  .btn {
+    display: inline-block; margin-top: 30px; background: var(--red); color: var(--cream);
+    font-family: var(--display); font-size: 1.15rem; text-decoration: none;
+    padding: 16px 36px; border-radius: 999px; border: 3px solid var(--brown);
+    box-shadow: 0 6px 0 var(--brown);
+    transition: transform .15s cubic-bezier(.34,1.56,.64,1), box-shadow .15s;
+  }
+  .btn:hover { transform: translateY(2px) scale(1.04) rotate(-1deg); box-shadow: 0 4px 0 var(--brown); }
+  .btn:active { transform: translateY(6px) scale(.97); box-shadow: 0 0 0 var(--brown); }
+
+  /* ---------- product cards ---------- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 34px; margin-top: 40px; }
+  .card {
+    background: #fff; border: 3px solid var(--brown); border-radius: var(--radius);
+    padding: 26px; text-align: center; box-shadow: 0 8px 0 rgba(63,42,29,.12);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+  }
+  .card:hover { transform: rotate(-2deg) scale(1.05); animation: jiggle .45s ease-in-out; }
+  @keyframes jiggle {
+    0%,100% { transform: rotate(-2deg) scale(1.05); }
+    25% { transform: rotate(2deg) scale(1.06); }
+    60% { transform: rotate(-1deg) scale(1.05); }
+  }
+  .card .ph { font-size: 4.5rem; }
+  .card h3 { margin: 12px 0 4px; font-size: 1.3rem; }
+  .card .price { color: var(--red); font-weight: 700; }
+
+  /* ---------- wavy divider ---------- */
+  .wave { display: block; width: 100%; height: 70px; margin-bottom: -1px; }
+
+  /* ---------- pink band / pinned section ---------- */
+  .band { background: var(--pink); }
+  .band-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: center; }
+  .polaroid {
+    background: #fff; border: 3px solid var(--brown); border-radius: 18px;
+    padding: 16px 16px 44px; font-size: 6rem; text-align: center; display: inline-block;
+    box-shadow: 0 10px 0 rgba(63,42,29,.15);
+  }
+  @media (max-width: 760px) { .band-inner { grid-template-columns: 1fr; } }
+
+  /* ---------- circular badge ---------- */
+  .badge { position: absolute; right: 6vw; top: -60px; width: 130px; height: 130px; z-index: 2; }
+  .badge svg { width: 100%; height: 100%; overflow: visible; }
+  .badge text { font-family: var(--sans); font-weight: 800; font-size: 13.5px;
+                letter-spacing: .18em; text-transform: uppercase; fill: var(--brown); }
+  .badge .center { position: absolute; inset: 0; display: grid; place-items: center; font-size: 2.4rem; }
+
+  footer { padding: 8vh 6vw; text-align: center; background: var(--brown); color: var(--cream); }
+  footer a { color: var(--butter); }
+
+  /* ============================================================
+     == BakeKit ==  reusable animation styles (copy from here)
+     ============================================================ */
+
+  /* 1. Scroll reveals — data-reveal="up|down|left|right|scale|rotate" */
+  [data-reveal] { opacity: 0; will-change: transform, opacity;
+    transition: opacity .7s ease, transform .9s cubic-bezier(.34,1.56,.64,1); /* springy overshoot */
+    transition-delay: var(--reveal-delay, 0ms); }
+  [data-reveal="up"]     { transform: translateY(60px); }
+  [data-reveal="down"]   { transform: translateY(-60px); }
+  [data-reveal="left"]   { transform: translateX(70px); }
+  [data-reveal="right"]  { transform: translateX(-70px); }
+  [data-reveal="scale"]  { transform: scale(.6); }
+  [data-reveal="rotate"] { transform: rotate(-8deg) scale(.8); }
+  [data-reveal].is-in    { opacity: 1; transform: none; }
+
+  /* 2/3. Parallax & scroll-linked rotation — transforms set from JS */
+  [data-parallax], [data-scroll-rotate] { will-change: transform; }
+
+  /* 4. Velocity-reactive marquee */
+  [data-marquee] { overflow: hidden; white-space: nowrap; background: var(--red);
+                   color: var(--cream); padding: 18px 0; border-block: 3px solid var(--brown); }
+  [data-marquee] .marquee-track { display: inline-flex; will-change: transform; }
+  [data-marquee] .marquee-chunk { display: inline-block; padding-right: .6em;
+    font-family: var(--display); font-size: clamp(1.4rem, 3.5vw, 2.4rem); }
+
+  /* 5. Pinned progress section */
+  [data-pin] { height: 300vh; }
+  [data-pin] .pin-stage { position: sticky; top: 0; height: 100svh; display: grid;
+                          place-items: center; overflow: hidden; }
+
+  /* 6. Rotating badge */
+  [data-spin] .spin-el { animation: bk-spin var(--spin-dur, 14s) linear infinite; transform-origin: 50% 50%; }
+  @keyframes bk-spin { to { transform: rotate(360deg); } }
+
+  /* Reduced motion: show everything, stop movement */
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none; }
+    [data-spin] .spin-el { animation: none; }
+    [data-pin] { height: auto; }
+    [data-pin] .pin-stage { position: static; height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO: load-in letter choreography + parallax stickers -->
+<section class="hero">
+  <span class="sticker" style="left:8vw; top:18vh"  data-parallax="-0.25" data-scroll-rotate="14">🍪</span>
+  <span class="sticker" style="right:10vw; top:24vh" data-parallax="-0.4"  data-scroll-rotate="-18">🎂</span>
+  <span class="sticker" style="left:16vw; bottom:16vh" data-parallax="-0.15" data-scroll-rotate="10">🥐</span>
+  <span class="sticker" style="right:18vw; bottom:12vh" data-parallax="-0.3" data-scroll-rotate="-12">🧁</span>
+  <span class="tag" data-reveal="down">Demo — placeholder brand</span>
+  <h1 data-split>Baked Happy</h1>
+  <p data-reveal="up" data-reveal-delay="500">A dependency-free scroll-animation kit in the style of a playful bakery shop. Scroll to taste every effect.</p>
+  <a class="btn" href="#shop" data-reveal="scale" data-reveal-delay="700">Squishy button</a>
+</section>
+
+<!-- MARQUEE: infinite, reacts to scroll velocity -->
+<div data-marquee data-marquee-speed="70" aria-hidden="true">
+  <span class="marquee-chunk">Fresh from the oven ✶ Scroll-velocity marquee ✶ </span>
+</div>
+
+<!-- PRODUCT GRID: staggered reveals + jiggle hover -->
+<section id="shop">
+  <span class="tag" data-reveal="up">Pattern 1 · staggered reveals</span>
+  <h2 data-reveal="up" style="font-size:clamp(2rem,5vw,3.5rem)">Product cards pop in<br>with a springy stagger</h2>
+  <div class="grid" data-stagger="110">
+    <div class="card" data-reveal="rotate"><div class="ph">🍪</div><h3>Choco Chunk</h3><p class="price">$4.50</p></div>
+    <div class="card" data-reveal="rotate"><div class="ph">🎂</div><h3>Layer Cake</h3><p class="price">$38</p></div>
+    <div class="card" data-reveal="rotate"><div class="ph">🥧</div><h3>Butter Pie</h3><p class="price">$22</p></div>
+    <div class="card" data-reveal="rotate"><div class="ph">🧁</div><h3>Cupcake</h3><p class="price">$5</p></div>
+  </div>
+</section>
+
+<!-- WAVY DIVIDER + PINK BAND: parallax + scroll-linked polaroid rotation + spinning badge -->
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,40 C240,80 480,0 720,35 C960,70 1200,10 1440,40 L1440,70 L0,70 Z" fill="var(--pink)"/>
+</svg>
+<section class="band">
+  <div class="badge" data-spin>
+    <svg class="spin-el" viewBox="0 0 130 130">
+      <defs><path id="circ" d="M65,65 m-48,0 a48,48 0 1,1 96,0 a48,48 0 1,1 -96,0"/></defs>
+      <text><textPath href="#circ">baked fresh · rotating badge · baked fresh ·</textPath></text>
+    </svg>
+    <div class="center">🥯</div>
+  </div>
+  <div class="band-inner">
+    <div>
+      <span class="tag" data-reveal="up">Patterns 2–3 · parallax &amp; scroll rotation</span>
+      <h2 data-reveal="up" style="font-size:clamp(2rem,4.5vw,3.2rem)">Stickers drift and polaroids straighten as you scroll</h2>
+      <p data-reveal="up" data-reveal-delay="150" style="margin-top:14px">The photos start tilted and rotate toward level, mapped to scroll progress — not time. The emoji stickers in the hero drift at independent parallax speeds.</p>
+    </div>
+    <div style="text-align:center">
+      <span class="polaroid" data-scroll-rotate="-10" data-parallax="-0.08">🍰</span>
+      <span class="polaroid" data-scroll-rotate="12" data-parallax="-0.18" style="margin-left:-30px">🍩</span>
+    </div>
+  </div>
+</section>
+
+<!-- PINNED SECTION: sticky stage, scroll-progress-driven scale/rotation -->
+<section data-pin style="padding:0">
+  <div class="pin-stage" style="background:var(--cream-dark)">
+    <div style="text-align:center">
+      <span class="tag">Pattern 5 · pinned progress section</span>
+      <div data-pin-target style="font-size:clamp(5rem,18vw,14rem); will-change:transform">🎂</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,3rem)">This section is pinned —<br>the cake grows with your scroll</h2>
+    </div>
+  </div>
+</section>
+
+<!-- SECOND MARQUEE, opposite direction -->
+<div data-marquee data-marquee-speed="-55" aria-hidden="true">
+  <span class="marquee-chunk">Microinteractions everywhere ✶ hover the cards ✶ </span>
+</div>
+
+<footer>
+  <p data-reveal="up">BakeKit demo — placeholder content only. See <a href="./ANALYSIS.md">ANALYSIS.md</a> for the full site analysis.</p>
+</footer>
+
+<script>
+/* ============================================================
+   == BakeKit == v1.0 — reusable scroll-animation kit (no deps)
+   Patterns: reveals, stagger, parallax, scroll-rotation,
+   velocity marquee, pinned sections, split-text load-in.
+   Copy this IIFE + the "== BakeKit ==" CSS block to reuse.
+   ============================================================ */
+(function BakeKit() {
+  "use strict";
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- 8. Split-text load-in: <h1 data-split> ---- */
+  document.querySelectorAll("[data-split]").forEach(el => {
+    const text = el.textContent;
+    el.textContent = "";
+    el.setAttribute("aria-label", text);
+    [...text].forEach((ch, i) => {
+      const s = document.createElement("span");
+      s.className = "ltr";
+      s.textContent = ch === " " ? " " : ch;
+      s.setAttribute("aria-hidden", "true");
+      if (!reduced) {
+        s.style.cssText = "opacity:0;transform:translateY(.6em) rotate(6deg)";
+        s.style.transition = `opacity .5s ease ${i*45}ms, transform .7s cubic-bezier(.34,1.56,.64,1) ${i*45}ms`;
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          s.style.opacity = 1; s.style.transform = "none";
+        }));
+      }
+      el.appendChild(s);
+    });
+  });
+
+  /* ---- 1. Reveals with optional container stagger ----
+     data-reveal="up|down|left|right|scale|rotate"
+     data-reveal-delay="ms"  |  parent[data-stagger="ms"] */
+  document.querySelectorAll("[data-stagger]").forEach(parent => {
+    const step = +parent.dataset.stagger || 100;
+    parent.querySelectorAll("[data-reveal]").forEach((el, i) =>
+      el.style.setProperty("--reveal-delay", i * step + "ms"));
+  });
+  document.querySelectorAll("[data-reveal]").forEach(el => {
+    if (el.dataset.revealDelay) el.style.setProperty("--reveal-delay", el.dataset.revealDelay + "ms");
+  });
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) if (e.isIntersecting) {
+      e.target.classList.add("is-in");
+      io.unobserve(e.target); // reveal once; remove to re-trigger on every pass
+    }
+  }, { threshold: 0.18 });
+  document.querySelectorAll("[data-reveal]").forEach(el => io.observe(el));
+
+  if (reduced) return; // everything below is continuous motion
+
+  /* ---- shared rAF loop with lerped scroll (smooth-scroll feel) ---- */
+  let scrollY = window.scrollY, smoothY = scrollY, velocity = 0;
+  addEventListener("scroll", () => { scrollY = window.scrollY; }, { passive: true });
+
+  const parallaxEls = [...document.querySelectorAll("[data-parallax]")];
+  const rotateEls   = [...document.querySelectorAll("[data-scroll-rotate]")];
+  const pins        = [...document.querySelectorAll("[data-pin]")];
+
+  /* ---- 4. Velocity-reactive marquee: <div data-marquee data-marquee-speed="70"> ---- */
+  const marquees = [...document.querySelectorAll("[data-marquee]")].map(el => {
+    const chunk = el.firstElementChild;
+    const track = document.createElement("div");
+    track.className = "marquee-track";
+    el.textContent = "";
+    const copies = Math.ceil(innerWidth / Math.max(chunk.offsetWidth || 300, 1)) + 2;
+    for (let i = 0; i < Math.max(copies, 3); i++) track.appendChild(chunk.cloneNode(true));
+    el.appendChild(track);
+    return { el, track, x: 0, base: (+el.dataset.marqueeSpeed || 60) / 60, w: 0 };
+  });
+
+  /* progress of el through viewport: 0 = entering bottom, 1 = leaving top */
+  const progress = el => {
+    const r = el.getBoundingClientRect();
+    return Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+  };
+
+  function frame() {
+    smoothY += (scrollY - smoothY) * 0.1;           // lerp = Lenis-like smoothing
+    velocity += ((scrollY - smoothY) - velocity) * 0.12;
+
+    // 2. parallax: data-parallax="-0.25" (fraction of scrolled distance)
+    for (const el of parallaxEls) {
+      const p = progress(el.closest("section") || el);
+      el.style.translate = `0 ${((p - .5) * innerHeight * +el.dataset.parallax).toFixed(1)}px`;
+    }
+    // 3. scroll-linked rotation: data-scroll-rotate="12" (deg at full progress)
+    for (const el of rotateEls) {
+      const p = progress(el);
+      el.style.rotate = ((1 - p) * +el.dataset.scrollRotate).toFixed(2) + "deg";
+    }
+    // 4. marquee advance + velocity kick + skew
+    for (const m of marquees) {
+      m.w = m.w || m.track.scrollWidth / 2;
+      m.x -= m.base + velocity * 0.06 * Math.sign(m.base);
+      const wrapped = ((m.x % m.w) + m.w) % m.w;      // wraps for both directions
+      m.track.style.transform =
+        `translateX(${(-wrapped).toFixed(1)}px) skewX(${Math.max(-12, Math.min(12, -velocity * .25)).toFixed(2)}deg)`;
+    }
+    // 5. pinned sections: expose progress, drive the demo target
+    for (const pin of pins) {
+      const r = pin.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
+      pin.style.setProperty("--pin-progress", p.toFixed(3));
+      const t = pin.querySelector("[data-pin-target]");
+      if (t) t.style.transform = `scale(${(.4 + p * 1.1).toFixed(3)}) rotate(${(p * 720).toFixed(1)}deg)`;
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
